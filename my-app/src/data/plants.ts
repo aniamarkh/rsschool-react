@@ -1,6 +1,6 @@
 export const plantsData = [
   {
-    imgSrc: '',
+    imgSrc: 'fiddleleaf.jpg',
     imgAlt: 'Fiddle Leaf Fig',
     title: 'Fiddle Leaf Fig',
     petFriendly: false,
@@ -8,7 +8,7 @@ export const plantsData = [
     price: 25.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'snake.jpg',
     imgAlt: 'Snake Plant',
     title: 'Snake Plant',
     petFriendly: true,
@@ -16,7 +16,7 @@ export const plantsData = [
     price: 12.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'rubber.jpg',
     imgAlt: 'Rubber Plant',
     title: 'Rubber Plant',
     petFriendly: false,
@@ -24,7 +24,7 @@ export const plantsData = [
     price: 18.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'zz.jpg',
     imgAlt: 'ZZ Plant',
     title: 'ZZ Plant',
     petFriendly: true,
@@ -32,7 +32,7 @@ export const plantsData = [
     price: 19.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'monstera.jpg',
     imgAlt: 'Monstera Deliciosa',
     title: 'Monstera Deliciosa',
     petFriendly: false,
@@ -40,7 +40,7 @@ export const plantsData = [
     price: 21.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'pothos.jpg',
     imgAlt: 'Pothos',
     title: 'Pothos',
     petFriendly: true,
@@ -48,7 +48,7 @@ export const plantsData = [
     price: 8.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'boston.jpg',
     imgAlt: 'Boston Fern',
     title: 'Boston Fern',
     petFriendly: true,
@@ -56,7 +56,7 @@ export const plantsData = [
     price: 15.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'lily.jpg',
     imgAlt: 'Peace Lily',
     title: 'Peace Lily',
     petFriendly: false,
@@ -64,7 +64,7 @@ export const plantsData = [
     price: 14.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'spider.jpg',
     imgAlt: 'Spider Plant',
     title: 'Spider Plant',
     petFriendly: true,
@@ -72,7 +72,7 @@ export const plantsData = [
     price: 11.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'bird.jpg',
     imgAlt: 'Bird of Paradise',
     title: 'Bird of Paradise',
     petFriendly: false,
@@ -80,7 +80,7 @@ export const plantsData = [
     price: 29.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'phil.jpg',
     imgAlt: 'Philodendron',
     title: 'Philodendron',
     petFriendly: false,
@@ -88,7 +88,7 @@ export const plantsData = [
     price: 17.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'chin.jpg',
     imgAlt: 'Chinese Evergreen',
     title: 'Chinese Evergreen',
     petFriendly: false,
@@ -96,7 +96,7 @@ export const plantsData = [
     price: 12.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'aloe.jpg',
     imgAlt: 'Aloe Vera',
     title: 'Aloe Vera',
     petFriendly: true,
@@ -104,7 +104,7 @@ export const plantsData = [
     price: 13.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'ivy.jpg',
     imgAlt: 'English Ivy',
     title: 'English Ivy',
     petFriendly: false,
@@ -112,7 +112,7 @@ export const plantsData = [
     price: 9.99
   },
   {
-    imgSrc: '',
+    imgSrc: 'croton.jpg',
     imgAlt: 'Croton',
     title: 'Croton',
     petFriendly: false,
