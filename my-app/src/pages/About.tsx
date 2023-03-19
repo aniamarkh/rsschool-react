@@ -6,6 +6,6 @@ export default class HomePage extends React.Component {
       <div className="container">
         <h1>This is About Page 👋</h1>
       </div>
-    )
+    );
   }
 }

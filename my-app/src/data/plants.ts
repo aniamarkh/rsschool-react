@@ -1,122 +1,139 @@
-export const plantsData = [
+import { PlantData } from 'types/types';
+
+export const plantsData: Array<PlantData> = [
   {
+    id: 1,
     imgSrc: 'fiddleleaf.jpg',
     imgAlt: 'Fiddle Leaf Fig',
     title: 'Fiddle Leaf Fig',
     petFriendly: false,
     inStock: 7,
-    price: 25.99
+    price: 26,
   },
   {
+    id: 2,
     imgSrc: 'snake.jpg',
     imgAlt: 'Snake Plant',
     title: 'Snake Plant',
     petFriendly: true,
     inStock: 4,
-    price: 12.99
+    price: 13,
   },
   {
+    id: 3,
     imgSrc: 'rubber.jpg',
     imgAlt: 'Rubber Plant',
     title: 'Rubber Plant',
     petFriendly: false,
     inStock: 9,
-    price: 18.99
+    price: 19,
   },
   {
+    id: 4,
     imgSrc: 'zz.jpg',
     imgAlt: 'ZZ Plant',
     title: 'ZZ Plant',
     petFriendly: true,
     inStock: 5,
-    price: 19.99
+    price: 20,
   },
   {
+    id: 5,
     imgSrc: 'monstera.jpg',
     imgAlt: 'Monstera Deliciosa',
     title: 'Monstera Deliciosa',
     petFriendly: false,
     inStock: 6,
-    price: 21.99
+    price: 22,
   },
   {
+    id: 6,
     imgSrc: 'pothos.jpg',
     imgAlt: 'Pothos',
     title: 'Pothos',
     petFriendly: true,
     inStock: 10,
-    price: 8.99
+    price: 9,
   },
   {
+    id: 7,
     imgSrc: 'boston.jpg',
     imgAlt: 'Boston Fern',
     title: 'Boston Fern',
     petFriendly: true,
     inStock: 2,
-    price: 15.99
+    price: 16,
   },
   {
+    id: 8,
     imgSrc: 'lily.jpg',
     imgAlt: 'Peace Lily',
     title: 'Peace Lily',
     petFriendly: false,
     inStock: 3,
-    price: 14.99
+    price: 15,
   },
   {
+    id: 9,
     imgSrc: 'spider.jpg',
     imgAlt: 'Spider Plant',
     title: 'Spider Plant',
     petFriendly: true,
     inStock: 8,
-    price: 11.99
+    price: 12,
   },
   {
+    id: 10,
     imgSrc: 'bird.jpg',
     imgAlt: 'Bird of Paradise',
     title: 'Bird of Paradise',
     petFriendly: false,
     inStock: 1,
-    price: 29.99
+    price: 30,
   },
   {
+    id: 11,
     imgSrc: 'phil.jpg',
     imgAlt: 'Philodendron',
     title: 'Philodendron',
     petFriendly: false,
     inStock: 7,
-    price: 17.99
+    price: 18,
   },
   {
+    id: 12,
     imgSrc: 'chin.jpg',
     imgAlt: 'Chinese Evergreen',
     title: 'Chinese Evergreen',
     petFriendly: false,
     inStock: 5,
-    price: 12.99
+    price: 13,
   },
   {
+    id: 13,
     imgSrc: 'aloe.jpg',
     imgAlt: 'Aloe Vera',
     title: 'Aloe Vera',
     petFriendly: true,
     inStock: 4,
-    price: 13.99
+    price: 14,
   },
   {
+    id: 14,
     imgSrc: 'ivy.jpg',
     imgAlt: 'English Ivy',
     title: 'English Ivy',
     petFriendly: false,
     inStock: 3,
-    price: 9.99
+    price: 10,
   },
   {
+    id: 15,
     imgSrc: 'croton.jpg',
     imgAlt: 'Croton',
     title: 'Croton',
     petFriendly: false,
     inStock: 6,
-    price: 23.99
+    price: 24,
   },
-]
+];
