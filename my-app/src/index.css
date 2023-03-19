@@ -25,9 +25,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -36,14 +33,24 @@ h1 {
   font-size: 2em;
   line-height: 1.1;
   margin: 10px;
+}
 
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .search {
   display: flex;
   width: 20rem;
-  top: 20%;
-  left: 50%;
 }
 
 .searchField {
@@ -55,4 +62,12 @@ h1 {
   border-radius: 5px;
   outline: none;
   color: #9DBFAF;
+}
+
+.card {
+  width: 250px;
+  height: 400px;
+  border-radius: 5px;
+  margin: 10px;
+  background-color: #135f17;
 }
