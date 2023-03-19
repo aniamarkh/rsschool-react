@@ -18,6 +18,7 @@ export default class SearchBar extends React.Component {
   }
 
   handleInput(value: string) {
+    localStorage.setItem('value', this.state.searchValue);
     this.setState({ searchValue: value });
   }
 

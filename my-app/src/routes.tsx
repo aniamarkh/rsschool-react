@@ -10,7 +10,7 @@ const enum AppRoutes {
   not_found = '/404',
 }
 
-const headerData = [
+export const headerData = [
   {
     title: 'Home',
     path: AppRoutes.main,
