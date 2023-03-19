@@ -8,7 +8,7 @@ const enum AppRoutes {
   main = '/',
   about = '/about',
   not_found = '/404',
-};
+}
 
 const headerData = [
   {
@@ -18,7 +18,7 @@ const headerData = [
   {
     title: 'About',
     path: AppRoutes.about,
-  }
+  },
 ];
 
 class Router extends React.Component {
@@ -32,6 +32,6 @@ class Router extends React.Component {
       </Routes>
     );
   }
-};
+}
 
 export default Router;
