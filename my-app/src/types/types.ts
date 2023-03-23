@@ -8,6 +8,7 @@ export interface PlantData {
   imgAlt: string;
   title: string;
   petFriendly: boolean;
-  inStock: number;
   price: number;
+  date: string;
+  isEasy: boolean;
 }
