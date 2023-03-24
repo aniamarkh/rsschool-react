@@ -3,13 +3,14 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/Home';
 import AboutPage from './pages/About';
 import NotFoundPage from './pages/NotFound';
-import Forms from './pages/Forms';
+import Forms from './pages/Form';
+import FormPage from './pages/Form';
 
 const enum AppRoutes {
   main = '/',
   about = '/about',
   not_found = '/404',
-  forms = '/forms',
+  form = '/form',
 }
 
 export const headerData = [
@@ -22,8 +23,8 @@ export const headerData = [
     path: AppRoutes.about,
   },
   {
-    title: 'Forms',
-    path: AppRoutes.forms,
+    title: 'Form',
+    path: AppRoutes.form,
   },
 ];
 
@@ -34,7 +35,7 @@ class Router extends React.Component {
         <Route path={AppRoutes.main} element={<HomePage />} />
         <Route path={AppRoutes.about} element={<AboutPage />} />
         <Route path={AppRoutes.not_found} element={<NotFoundPage />} />
-        <Route path={AppRoutes.forms} element={<Forms />} />
+        <Route path={AppRoutes.form} element={<FormPage />} />
         <Route path="*" element={<Navigate replace to={AppRoutes.not_found} />} />
       </Routes>
     );

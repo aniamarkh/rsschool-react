@@ -1,3 +1,5 @@
+import { RefObject } from 'react';
+
 export interface SearchBarState {
   searchValue: string;
 }
@@ -11,4 +13,14 @@ export interface PlantData {
   price: number;
   date: string;
   isEasy: boolean;
+}
+
+export interface InputProps {
+  label: string;
+  inputRef: RefObject<HTMLInputElement>;
+}
+
+export interface FormState {
+  errors: string[];
+  submitted: boolean;
 }

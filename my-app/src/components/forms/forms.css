@@ -1,6 +1,33 @@
-.forms {
+.form-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
+  height: 90vh;
+}
+
+.form {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+}
+
+.input-text {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.errors {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  color: red;
+}
+
+.success-message {
+  color: green;
 }
