@@ -7,7 +7,7 @@ export default class PlantCard extends React.Component<PlantData> {
 
     return (
       <div className="card" data-id={id}>
-        <img className="card__img" src={`assets/img/${imgSrc}`} alt={imgAlt} />
+        <img className="card__img" src={imgSrc} alt={imgAlt} />
         <h3 className="card__title">{title.toUpperCase()}</h3>
         <div className="card__desc">
           <p className="desc-price">Price: ${price}</p>

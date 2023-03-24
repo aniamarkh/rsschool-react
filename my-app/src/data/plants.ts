@@ -3,7 +3,7 @@ import { PlantData } from 'types/types';
 export const plantsData: Array<PlantData> = [
   {
     id: 1,
-    imgSrc: 'fiddleleaf.jpg',
+    imgSrc: 'assets/img/fiddleleaf.jpg',
     imgAlt: 'Fiddle Leaf Fig',
     title: 'Fiddle Leaf Fig',
     petFriendly: false,
@@ -12,7 +12,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 2,
-    imgSrc: 'snake.jpg',
+    imgSrc: 'assets/img/snake.jpg',
     imgAlt: 'Snake Plant',
     title: 'Snake Plant',
     petFriendly: true,
@@ -21,7 +21,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 3,
-    imgSrc: 'rubber.jpg',
+    imgSrc: 'assets/img/rubber.jpg',
     imgAlt: 'Rubber Plant',
     title: 'Rubber Plant',
     petFriendly: false,
@@ -30,7 +30,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 4,
-    imgSrc: 'phil.jpg',
+    imgSrc: 'assets/img/phil.jpg',
     imgAlt: 'Philodendron',
     title: 'Philodendron',
     petFriendly: false,
@@ -39,7 +39,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 5,
-    imgSrc: 'monstera.jpg',
+    imgSrc: 'assets/img/monstera.jpg',
     imgAlt: 'Monstera Deliciosa',
     title: 'Monstera Deliciosa',
     petFriendly: false,
@@ -48,7 +48,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 6,
-    imgSrc: 'pothos.jpg',
+    imgSrc: 'assets/img/pothos.jpg',
     imgAlt: 'Pothos',
     title: 'Pothos',
     petFriendly: true,
@@ -57,7 +57,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 7,
-    imgSrc: 'boston.jpg',
+    imgSrc: 'assets/img/boston.jpg',
     imgAlt: 'Boston Fern',
     title: 'Boston Fern',
     petFriendly: true,
@@ -66,7 +66,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 8,
-    imgSrc: 'lily.jpg',
+    imgSrc: 'assets/img/lily.jpg',
     imgAlt: 'Peace Lily',
     title: 'Peace Lily',
     petFriendly: false,
@@ -75,7 +75,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 9,
-    imgSrc: 'spider.jpg',
+    imgSrc: 'assets/img/spider.jpg',
     imgAlt: 'Spider Plant',
     title: 'Spider Plant',
     petFriendly: true,
@@ -84,7 +84,7 @@ export const plantsData: Array<PlantData> = [
   },
   {
     id: 10,
-    imgSrc: 'bird.jpg',
+    imgSrc: 'assets/img/bird.jpg',
     imgAlt: 'Bird of Paradise',
     title: 'Bird of Paradise',
     petFriendly: false,
