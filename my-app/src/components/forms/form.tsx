@@ -2,7 +2,8 @@ import React, { createRef } from 'react';
 import './forms.css';
 import TextInput from './formElements/textInput';
 import DateInput from './formElements/dateInput';
-import PriceInput from './formElements/priceInput';
+import PriceSelect from './formElements/priceInput';
+import Checkbox from './formElements/checkboxInput';
 import { PlantData, FormState } from 'types/types';
 import { plantsData } from '../../data/plants';
 import { findMaxId, handleDateChange } from './utils';
@@ -11,13 +12,19 @@ export default class Form extends React.Component {
   titleInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   dateInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   priceSelect: React.RefObject<HTMLSelectElement> = createRef<HTMLSelectElement>();
+  checkboxInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
 
   state: FormState = {
     errors: [],
     submitted: false,
   };
 
-  validateForm = (titleValue: string, dateInput: string, priceValue: string): string[] => {
+  validateForm = (
+    titleValue: string,
+    dateInput: string,
+    priceValue: string,
+    checkbox: boolean
+  ): string[] => {
     const errors: string[] = [];
     if (titleValue.trim() === '') {
       errors.push("- Don't forget to give your plant a name!");
@@ -37,6 +44,10 @@ export default class Form extends React.Component {
     if (priceValue === 'default') {
       errors.push('- Please select price');
     }
+
+    if (!checkbox) {
+      errors.push('- Please agree to sell us this plant');
+    }
     return errors;
   };
 
@@ -46,7 +57,8 @@ export default class Form extends React.Component {
     const titleValue = this.titleInput.current?.value || '';
     const dateValue = this.dateInput.current?.value || '';
     const priceValue = this.priceSelect.current?.value || '0';
-    const errors = this.validateForm(titleValue, dateValue, priceValue);
+    const checkbox = this.checkboxInput.current?.checked || false;
+    const errors = this.validateForm(titleValue, dateValue, priceValue, checkbox);
 
     this.setState({ errors }, () => {
       if (this.state.errors.length === 0) {
@@ -59,7 +71,6 @@ export default class Form extends React.Component {
           petFriendly: false,
           price: Number(priceValue),
           date: handleDateChange(dateValue),
-          isEasy: false,
         };
         plantsData.push(cardData);
       } else {
@@ -71,9 +82,11 @@ export default class Form extends React.Component {
   render(): React.ReactNode {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
+        <h3>🌿 Tell me about your plant 🌱</h3>
         <TextInput label="Plant Name" inputRef={this.titleInput} />
         <DateInput label="Delivery Date" inputRef={this.dateInput} />
-        <PriceInput label="Price" selectRef={this.priceSelect} />
+        <PriceSelect label="Price" selectRef={this.priceSelect} />
+        <Checkbox label="I agree to sell you this plant" inputRef={this.checkboxInput} />
         {this.state.errors.length > 0 && (
           <div className="errors">
             {this.state.errors.map((error) => (
