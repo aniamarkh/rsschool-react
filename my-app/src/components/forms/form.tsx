@@ -31,6 +31,7 @@ export default class Form extends React.Component<FormState> {
 
   validateForm = (formData: PlantData): string[] => {
     const errors: string[] = [];
+
     if (formData.title.trim() === '') {
       errors.push("- Don't forget to give your plant a name!");
     } else if (formData.title.charAt(0) !== formData.title.charAt(0).toUpperCase()) {

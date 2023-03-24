@@ -31,10 +31,6 @@ export interface PetOption {
   label: string;
 }
 
-export interface RadioGroupState {
-  selectedValue: number;
-}
-
 export interface FormState {
   errors: string[];
   submitted: boolean;
