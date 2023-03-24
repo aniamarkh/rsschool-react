@@ -5,8 +5,8 @@ export default class RadioGroup extends React.Component<InputProps> {
   render() {
     const { label, onChange } = this.props;
     const options = [
-      { value: 0, label: 'No pets allowed' },
-      { value: 1, label: 'Pet friendly' },
+      { value: 0, label: 'No' },
+      { value: 1, label: 'Yes' },
     ];
 
     return (

@@ -32,7 +32,16 @@ export interface PetOption {
 }
 
 export interface FormState {
-  errors: string[];
+  errors: ErrorsState;
   submitted: boolean;
   formData: PlantData;
+}
+
+export interface ErrorsState {
+  title: string;
+  date: string;
+  price: string;
+  petFriendly: string;
+  imgSrc: string;
+  checkbox: string;
 }

@@ -7,8 +7,9 @@ import RadioGroup from './formElements/radioGroup';
 import FileInput from './formElements/fileInput';
 import Checkbox from './formElements/checkboxInput';
 import ErrorMessage from './formElements/errorMessage';
-import { PlantData, FormState } from 'types/types';
-import { plantsData } from '../../data/plants';
+import CardsList from '../cardsList/cardsList';
+import { PlantData, FormState, ErrorsState } from 'types/types';
+import { plantsData } from '../../data/formData';
 import { findMaxId, handleDateChange } from './utils';
 
 export default class Form extends React.Component<FormState> {
@@ -18,7 +19,14 @@ export default class Form extends React.Component<FormState> {
   imgUpload: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   checkboxInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   state: FormState = {
-    errors: [],
+    errors: {
+      title: '',
+      date: '',
+      price: '',
+      petFriendly: '',
+      imgSrc: '',
+      checkbox: '',
+    },
     submitted: false,
     formData: {
       id: 0,
@@ -31,38 +39,45 @@ export default class Form extends React.Component<FormState> {
     },
   };
 
-  validateForm = (formData: PlantData): string[] => {
-    const errors: string[] = [];
+  validateForm = (formData: PlantData): ErrorsState => {
+    const errors: ErrorsState = {
+      title: '',
+      date: '',
+      price: '',
+      petFriendly: '',
+      imgSrc: '',
+      checkbox: '',
+    };
 
     if (formData.title.trim() === '') {
-      errors.push("Don't forget to give your plant a name!");
+      errors.title = "Don't forget to give your plant a name!";
     } else if (formData.title.charAt(0) !== formData.title.charAt(0).toUpperCase()) {
-      errors.push("Plant's name must start with an uppercase letter");
+      errors.title = 'Start with an uppercase letter';
     }
 
     if (formData.date === '') {
-      errors.push('Please select a delivery date');
+      errors.date = 'Select a delivery date';
     }
     const date = new Date(this.dateInput.current?.value || '');
     const today = new Date();
     if (date < today) {
-      errors.push('Give us at least one day ;)');
+      errors.date = 'Give us at least one day ;)';
     }
 
     if (!formData.price) {
-      errors.push('Please select price');
+      errors.price = 'Please select price';
     }
 
     if (formData.petFriendly === null) {
-      errors.push('Please tell if plant is pet-friendly');
+      errors.petFriendly = "Tell if your plant is pet-friendly, it's important";
     }
 
     if (formData.imgSrc === null) {
-      errors.push('Upload a photo');
+      errors.imgSrc = 'Upload a photo, we need it';
     }
 
     if (!this.checkboxInput.current?.checked) {
-      errors.push('Please agree to sell us this plant');
+      errors.checkbox = "Don't you agree to sell us this plant? 👉👈";
     }
     return errors;
   };
@@ -86,7 +101,7 @@ export default class Form extends React.Component<FormState> {
       () => {
         const errors = this.validateForm(this.state.formData);
         this.setState({ errors }, () => {
-          if (this.state.errors.length === 0) {
+          if (Object.values(this.state.errors).every((value) => value === '')) {
             this.setState({ submitted: true });
             plantsData.push(this.state.formData);
           } else {
@@ -117,25 +132,34 @@ export default class Form extends React.Component<FormState> {
   };
 
   render(): React.ReactNode {
+    const stateErr = this.state.errors;
     return (
-      <form className="form" onSubmit={this.handleSubmit}>
-        <h3>🌿 Tell me about your plant 🌱</h3>
-        <TextInput label="Plant Name" inputRef={this.titleInput} />
-        <DateInput label="Delivery Date" inputRef={this.dateInput} />
-        <PriceSelect label="Price" selectRef={this.priceSelect} />
-        <RadioGroup label="What about pets?" onChange={this.handleRadioChange} />
-        <FileInput label="Photo Upload" inputRef={this.imgUpload} />
-        <Checkbox label="I agree to sell you this plant" inputRef={this.checkboxInput} />
-        {this.state.errors.length > 0 && (
-          <div className="errors">
-            {this.state.errors.map((error, index) => (
-              <ErrorMessage key={index} errorStr={error} />
-            ))}
-          </div>
-        )}
-        {this.state.submitted && <div className="success-message">Your plant has been added!</div>}
-        <button type="submit">Submit</button>
-      </form>
+      <div className="form-container">
+        <form className="form" onSubmit={this.handleSubmit}>
+          <h3>🌿 Tell me about your plant 🌱</h3>
+          <TextInput label="Name" inputRef={this.titleInput} />
+          {stateErr.title && <ErrorMessage errorStr={stateErr.title} />}
+
+          <DateInput label="Delivery Date" inputRef={this.dateInput} />
+          {stateErr.date && <ErrorMessage errorStr={stateErr.date} />}
+
+          <PriceSelect label="Price" selectRef={this.priceSelect} />
+          {stateErr.price && <ErrorMessage errorStr={stateErr.price} />}
+
+          <RadioGroup label="Is pet-friendly?" onChange={this.handleRadioChange} />
+          {stateErr.petFriendly && <ErrorMessage errorStr={stateErr.petFriendly} />}
+          <FileInput label="Photo Upload" inputRef={this.imgUpload} />
+          {stateErr.imgSrc && <ErrorMessage errorStr={stateErr.imgSrc} />}
+          <Checkbox label="I agree to sell you this plant" inputRef={this.checkboxInput} />
+          {stateErr.checkbox && <ErrorMessage errorStr={stateErr.checkbox} />}
+
+          {this.state.submitted && (
+            <div className="success-message">Your plant has been added!</div>
+          )}
+          <button type="submit">Submit</button>
+        </form>
+        <CardsList data={plantsData} />
+      </div>
     );
   }
 }
