@@ -18,9 +18,15 @@
   color: #241412;
 }
 
-.input-text, .input-date, .input-checkbox {
+.input-text, .input-date, .input-checkbox, .radio {
   display: flex;
   flex-direction: row;
+  gap: .5rem;
+}
+
+.input-radio {
+  display: flex;
+  flex-direction: column;
   gap: .5rem;
 }
 

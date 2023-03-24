@@ -3,12 +3,13 @@ import './forms.css';
 import TextInput from './formElements/textInput';
 import DateInput from './formElements/dateInput';
 import PriceSelect from './formElements/priceInput';
+import RadioGroup from './formElements/radioGroup';
 import Checkbox from './formElements/checkboxInput';
 import { PlantData, FormState } from 'types/types';
 import { plantsData } from '../../data/plants';
 import { findMaxId, handleDateChange } from './utils';
 
-export default class Form extends React.Component {
+export default class Form extends React.Component<FormState> {
   titleInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   dateInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   priceSelect: React.RefObject<HTMLSelectElement> = createRef<HTMLSelectElement>();
@@ -17,35 +18,43 @@ export default class Form extends React.Component {
   state: FormState = {
     errors: [],
     submitted: false,
+    formData: {
+      id: 0,
+      imgSrc: '',
+      imgAlt: '',
+      title: '',
+      petFriendly: null,
+      price: 0,
+      date: '',
+    },
   };
 
-  validateForm = (
-    titleValue: string,
-    dateInput: string,
-    priceValue: string,
-    checkbox: boolean
-  ): string[] => {
+  validateForm = (formData: PlantData): string[] => {
     const errors: string[] = [];
-    if (titleValue.trim() === '') {
+    if (formData.title.trim() === '') {
       errors.push("- Don't forget to give your plant a name!");
-    } else if (titleValue.charAt(0) !== titleValue.charAt(0).toUpperCase()) {
+    } else if (formData.title.charAt(0) !== formData.title.charAt(0).toUpperCase()) {
       errors.push("- Plant's name must start with an uppercase letter");
     }
 
-    if (dateInput === '') {
+    if (formData.date === '') {
       errors.push('- Please select a delivery date');
     }
-    const date = new Date(dateInput);
+    const date = new Date(this.dateInput.current?.value || '');
     const today = new Date();
     if (date < today) {
       errors.push("- We haven't perfected time travel yet. Give us at least one day ;)");
     }
 
-    if (priceValue === 'default') {
+    if (!formData.price) {
       errors.push('- Please select price');
     }
 
-    if (!checkbox) {
+    if (formData.petFriendly === null) {
+      errors.push('- Please tell if plant is pet-friendly');
+    }
+
+    if (!this.checkboxInput.current?.checked) {
       errors.push('- Please agree to sell us this plant');
     }
     return errors;
@@ -53,30 +62,40 @@ export default class Form extends React.Component {
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const titleValue = this.titleInput.current?.value || '';
-    const dateValue = this.dateInput.current?.value || '';
-    const priceValue = this.priceSelect.current?.value || '0';
-    const checkbox = this.checkboxInput.current?.checked || false;
-    const errors = this.validateForm(titleValue, dateValue, priceValue, checkbox);
-
-    this.setState({ errors }, () => {
-      if (this.state.errors.length === 0) {
-        this.setState({ submitted: true });
-        const cardData: PlantData = {
+    this.setState(
+      (prevState: FormState) => ({
+        formData: {
+          ...prevState.formData,
           id: findMaxId(plantsData),
-          imgSrc: 'none',
-          imgAlt: titleValue,
-          title: titleValue,
-          petFriendly: false,
-          price: Number(priceValue),
-          date: handleDateChange(dateValue),
-        };
-        plantsData.push(cardData);
-      } else {
-        this.setState({ submitted: false });
+          imgSrc: '',
+          imgAlt: this.titleInput.current?.value || '',
+          title: this.titleInput.current?.value || '',
+          price: Number(this.priceSelect.current?.value),
+          date: handleDateChange(this.dateInput.current?.value || ''),
+        },
+      }),
+      () => {
+        const errors = this.validateForm(this.state.formData);
+        this.setState({ errors }, () => {
+          if (this.state.errors.length === 0) {
+            this.setState({ submitted: true });
+            plantsData.push(this.state.formData);
+          } else {
+            this.setState({ submitted: false });
+          }
+        });
       }
-    });
+    );
+  };
+
+  handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const petFriendlyValue = Number(event.target.value);
+    this.setState((prevState: FormState) => ({
+      formData: {
+        ...prevState.formData,
+        petFriendly: petFriendlyValue === 1,
+      },
+    }));
   };
 
   render(): React.ReactNode {
@@ -86,6 +105,7 @@ export default class Form extends React.Component {
         <TextInput label="Plant Name" inputRef={this.titleInput} />
         <DateInput label="Delivery Date" inputRef={this.dateInput} />
         <PriceSelect label="Price" selectRef={this.priceSelect} />
+        <RadioGroup label="What about pets?" onChange={this.handleRadioChange} />
         <Checkbox label="I agree to sell you this plant" inputRef={this.checkboxInput} />
         {this.state.errors.length > 0 && (
           <div className="errors">

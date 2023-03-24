@@ -1,0 +1,32 @@
+import React from 'react';
+import { InputProps } from 'types/types';
+
+export default class RadioGroup extends React.Component<InputProps> {
+  render() {
+    const { label, onChange } = this.props;
+    const options = [
+      { value: 0, label: 'No pets allowed' },
+      { value: 1, label: 'Pet friendly' },
+    ];
+
+    return (
+      <div className="radio">
+        <p>{label}</p>
+        <div className="input-radio">
+          {options.map((option, index) => (
+            <div key={index}>
+              <input
+                type="radio"
+                id={option.label}
+                name={label}
+                value={option.value}
+                onChange={onChange}
+              />
+              <label htmlFor={option.label}>{option.label}</label>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
