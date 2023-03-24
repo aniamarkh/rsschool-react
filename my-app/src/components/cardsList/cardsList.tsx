@@ -1,13 +1,14 @@
 import React from 'react';
 import PlantCard from '../card/card';
 import { PlantData } from '../../types/types';
-import { plantsData } from '../../data/plants';
 
-export default class CardsList extends React.Component {
+export default class CardsList extends React.Component<{ data: PlantData[] }> {
   render() {
+    const { data } = this.props;
+
     return (
       <ul className="card-list">
-        {plantsData.map((item: PlantData) => (
+        {data.map((item: PlantData) => (
           <li key={item.id} className="card-list__item">
             <PlantCard {...item} />
           </li>
