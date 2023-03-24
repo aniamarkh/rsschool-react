@@ -17,7 +17,13 @@ export interface PlantData {
 
 export interface InputProps {
   label: string;
-  inputRef: RefObject<HTMLInputElement>;
+  inputRef?: RefObject<HTMLInputElement>;
+  selectRef?: RefObject<HTMLSelectElement>;
+}
+
+export interface PriceObj {
+  value: string;
+  label: string;
 }
 
 export interface FormState {

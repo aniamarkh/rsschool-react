@@ -11,8 +11,8 @@ export default class PlantCard extends React.Component<PlantData> {
         <h3 className="card__title">{title.toUpperCase()}</h3>
         <div className="card__desc">
           <p className="desc-price">Price: ${price}</p>
-          <p>🐱🐶: {petFriendly ? 'safe' : 'dangerous! ❌'}</p>
           <p>delivery: {date}</p>
+          <p>🐱🐶: {petFriendly ? 'safe' : 'dangerous! ❌'}</p>
           <p>{isEasy ? 'easy to grow 🌽' : 'capricious plant 🧐'}</p>
         </div>
       </div>

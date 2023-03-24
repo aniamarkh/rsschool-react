@@ -3,8 +3,8 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/Home';
 import AboutPage from './pages/About';
 import NotFoundPage from './pages/NotFound';
-import Forms from './pages/Form';
-import FormPage from './pages/Form';
+import Forms from './pages/FormPage';
+import FormPage from './pages/FormPage';
 
 const enum AppRoutes {
   main = '/',
