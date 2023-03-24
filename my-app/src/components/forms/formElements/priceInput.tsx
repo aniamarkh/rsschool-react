@@ -2,7 +2,7 @@ import React from 'react';
 import { InputProps } from 'types/types';
 import { priceOptions } from '../../../data/prices';
 
-export default class PriceInput extends React.Component<InputProps> {
+export default class PriceSelect extends React.Component<InputProps> {
   render() {
     const { label, selectRef } = this.props;
     return (

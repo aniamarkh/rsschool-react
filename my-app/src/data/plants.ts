@@ -9,7 +9,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: false,
     price: 26,
     date: '04.04.2023',
-    isEasy: false,
   },
   {
     id: 2,
@@ -19,7 +18,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: true,
     price: 13,
     date: '02.04.2023',
-    isEasy: true,
   },
   {
     id: 3,
@@ -29,7 +27,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: false,
     price: 19,
     date: '30.03.2023',
-    isEasy: false,
   },
   {
     id: 4,
@@ -39,7 +36,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: false,
     price: 18,
     date: '09.04.2023',
-    isEasy: true,
   },
   {
     id: 5,
@@ -49,7 +45,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: false,
     price: 22,
     date: '01.04.2023',
-    isEasy: false,
   },
   {
     id: 6,
@@ -59,7 +54,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: true,
     price: 9,
     date: '05.04.2023',
-    isEasy: true,
   },
   {
     id: 7,
@@ -69,7 +63,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: true,
     price: 16,
     date: '03.04.2023',
-    isEasy: false,
   },
   {
     id: 8,
@@ -79,7 +72,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: false,
     price: 15,
     date: '07.04.2023',
-    isEasy: true,
   },
   {
     id: 9,
@@ -89,7 +81,6 @@ export const plantsData: Array<PlantData> = [
     petFriendly: true,
     price: 12,
     date: '06.04.2023',
-    isEasy: false,
   },
   {
     id: 10,
@@ -99,6 +90,5 @@ export const plantsData: Array<PlantData> = [
     petFriendly: false,
     price: 30,
     date: '10.04.2023',
-    isEasy: false,
   },
 ];

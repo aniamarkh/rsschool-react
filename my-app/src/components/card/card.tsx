@@ -3,7 +3,7 @@ import { PlantData } from '../../types/types';
 
 export default class PlantCard extends React.Component<PlantData> {
   render() {
-    const { id, imgSrc, imgAlt, title, petFriendly, price, date, isEasy } = this.props;
+    const { id, imgSrc, imgAlt, title, petFriendly, price, date } = this.props;
 
     return (
       <div className="card" data-id={id}>
@@ -13,7 +13,6 @@ export default class PlantCard extends React.Component<PlantData> {
           <p className="desc-price">Price: ${price}</p>
           <p>delivery: {date}</p>
           <p>🐱🐶: {petFriendly ? 'safe' : 'dangerous! ❌'}</p>
-          <p>{isEasy ? 'easy to grow 🌽' : 'capricious plant 🧐'}</p>
         </div>
       </div>
     );

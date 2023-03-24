@@ -12,7 +12,6 @@ export interface PlantData {
   petFriendly: boolean;
   price: number;
   date: string;
-  isEasy: boolean;
 }
 
 export interface InputProps {
