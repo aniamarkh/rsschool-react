@@ -5,6 +5,7 @@ import DateInput from './formElements/dateInput';
 import PriceSelect from './formElements/priceInput';
 import RadioGroup from './formElements/radioGroup';
 import Checkbox from './formElements/checkboxInput';
+import ErrorMessage from './formElements/errorMessage';
 import { PlantData, FormState } from 'types/types';
 import { plantsData } from '../../data/plants';
 import { findMaxId, handleDateChange } from './utils';
@@ -44,7 +45,7 @@ export default class Form extends React.Component<FormState> {
     const date = new Date(this.dateInput.current?.value || '');
     const today = new Date();
     if (date < today) {
-      errors.push("- We haven't perfected time travel yet. Give us at least one day ;)");
+      errors.push('- Give us at least one day ;)');
     }
 
     if (!formData.price) {
@@ -110,8 +111,8 @@ export default class Form extends React.Component<FormState> {
         <Checkbox label="I agree to sell you this plant" inputRef={this.checkboxInput} />
         {this.state.errors.length > 0 && (
           <div className="errors">
-            {this.state.errors.map((error) => (
-              <p key={error}>{error}</p>
+            {this.state.errors.map((error, index) => (
+              <ErrorMessage key={index} errorStr={error} />
             ))}
           </div>
         )}

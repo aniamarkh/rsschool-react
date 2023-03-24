@@ -7,7 +7,7 @@
 }
 
 .form {
-  width: 400px;
+  width: 450px;
   padding: 20px;
   border-radius: 15px;
   display: flex;
@@ -19,15 +19,20 @@
 }
 
 .input-text, .input-date, .input-checkbox, .radio {
+  width: 350px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: .5rem;
+}
+
+.input-checkbox {
+  font-weight: 600;
 }
 
 .input-radio {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
 }
 
 .errors {
