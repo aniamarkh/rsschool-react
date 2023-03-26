@@ -106,9 +106,9 @@ export default class Form extends React.Component<FormState> {
         const errors = this.validateForm(this.state.formData);
         this.setState({ errors }, () => {
           if (Object.values(this.state.errors).every((value) => value === '')) {
-            this.setState({ submitted: true });
             plantsData.push(this.state.formData);
             this.resetForm();
+            this.setState({ submitted: true });
           } else {
             this.setState({ submitted: false });
           }
@@ -146,7 +146,6 @@ export default class Form extends React.Component<FormState> {
         imgSrc: '',
         checkbox: '',
       },
-      submitted: false,
     }));
   };
 
