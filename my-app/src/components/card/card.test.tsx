@@ -11,8 +11,8 @@ const samplePlantData: PlantData = {
   imgAlt: 'Fiddle Leaf Fig',
   title: 'Fiddle Leaf Fig',
   petFriendly: false,
-  inStock: 7,
   price: 26,
+  date: '69.06.9069',
 };
 
 describe('Card', () => {
@@ -31,9 +31,12 @@ describe('Card', () => {
     expect(getByText('🐱🐶: dangerous! ❌')).toBeDefined();
   });
 
-  test('displays correct stock and price', () => {
+  test('displays correct stock', () => {
     const { getByText } = render(<Card {...samplePlantData} />);
-    expect(getByText('In stock: 7')).toBeDefined();
     expect(getByText('Price: $26')).toBeDefined();
+  });
+  test('displays correct date', () => {
+    const { getByText } = render(<Card {...samplePlantData} />);
+    expect(getByText('delivery: 69.06.9069')).toBeDefined();
   });
 });
