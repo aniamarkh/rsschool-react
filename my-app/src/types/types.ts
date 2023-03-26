@@ -22,7 +22,7 @@ export interface InputProps {
 
 export interface RadioGroupProps {
   label: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   radioGroupRefs: RefObject<HTMLInputElement>[];
 }
 
