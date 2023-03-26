@@ -18,7 +18,12 @@ export interface InputProps {
   label: string;
   inputRef?: RefObject<HTMLInputElement>;
   selectRef?: RefObject<HTMLSelectElement>;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface RadioGroupProps {
+  label: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  radioGroupRefs: RefObject<HTMLInputElement>[];
 }
 
 export interface PriceObj {

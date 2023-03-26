@@ -1,9 +1,9 @@
 import React from 'react';
-import { InputProps } from 'types/types';
+import { RadioGroupProps } from 'types/types';
 
-export default class RadioGroup extends React.Component<InputProps> {
+export default class RadioGroup extends React.Component<RadioGroupProps> {
   render() {
-    const { label, onChange } = this.props;
+    const { label, radioGroupRefs, onChange } = this.props;
     const options = [
       { value: 0, label: 'No' },
       { value: 1, label: 'Yes' },
@@ -16,6 +16,7 @@ export default class RadioGroup extends React.Component<InputProps> {
           {options.map((option, index) => (
             <div key={index}>
               <input
+                ref={radioGroupRefs[index]}
                 type="radio"
                 id={option.label}
                 name={label}

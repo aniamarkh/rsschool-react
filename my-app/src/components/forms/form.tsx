@@ -16,6 +16,10 @@ export default class Form extends React.Component<FormState> {
   titleInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   dateInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   priceSelect: React.RefObject<HTMLSelectElement> = createRef<HTMLSelectElement>();
+  radioGroupRefs: React.RefObject<HTMLInputElement>[] = [
+    createRef<HTMLInputElement>(),
+    createRef<HTMLInputElement>(),
+  ];
   imgUpload: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   checkboxInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   state: FormState = {
@@ -104,6 +108,7 @@ export default class Form extends React.Component<FormState> {
           if (Object.values(this.state.errors).every((value) => value === '')) {
             this.setState({ submitted: true });
             plantsData.push(this.state.formData);
+            // this.resetForm();
           } else {
             this.setState({ submitted: false });
           }
@@ -112,8 +117,8 @@ export default class Form extends React.Component<FormState> {
     );
   };
 
-  handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const petFriendlyValue = Number(event.target.value);
+  handleRadioChange = () => {
+    const petFriendlyValue = this.radioGroupRefs[1].current?.checked ? 1 : 0;
     this.setState((prevState: FormState) => ({
       formData: {
         ...prevState.formData,
@@ -146,7 +151,11 @@ export default class Form extends React.Component<FormState> {
           <PriceSelect label="Price" selectRef={this.priceSelect} />
           {stateErr.price && <ErrorMessage errorStr={stateErr.price} />}
 
-          <RadioGroup label="Is pet-friendly?" onChange={this.handleRadioChange} />
+          <RadioGroup
+            label="Is pet-friendly?"
+            radioGroupRefs={this.radioGroupRefs}
+            onChange={this.handleRadioChange}
+          />
           {stateErr.petFriendly && <ErrorMessage errorStr={stateErr.petFriendly} />}
           <FileInput label="Photo Upload" inputRef={this.imgUpload} />
           {stateErr.imgSrc && <ErrorMessage errorStr={stateErr.imgSrc} />}
