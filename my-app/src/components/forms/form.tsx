@@ -108,13 +108,46 @@ export default class Form extends React.Component<FormState> {
           if (Object.values(this.state.errors).every((value) => value === '')) {
             this.setState({ submitted: true });
             plantsData.push(this.state.formData);
-            // this.resetForm();
+            this.resetForm();
           } else {
             this.setState({ submitted: false });
           }
         });
       }
     );
+  };
+
+  resetForm = () => {
+    if (this.titleInput.current) this.titleInput.current.value = '';
+    if (this.dateInput.current) this.dateInput.current.value = '';
+    if (this.priceSelect.current) this.priceSelect.current.value = '';
+    this.radioGroupRefs.forEach((ref) => {
+      if (ref.current) ref.current.checked = false;
+    });
+    if (this.imgUpload.current) this.imgUpload.current.value = '';
+    if (this.checkboxInput.current) this.checkboxInput.current.checked = false;
+
+    this.setState((prevState: FormState) => ({
+      formData: {
+        ...prevState.formData,
+        id: 0,
+        imgSrc: '',
+        imgAlt: '',
+        title: '',
+        petFriendly: null,
+        price: 0,
+        date: '',
+      },
+      errors: {
+        title: '',
+        date: '',
+        price: '',
+        petFriendly: '',
+        imgSrc: '',
+        checkbox: '',
+      },
+      submitted: false,
+    }));
   };
 
   handleRadioChange = () => {
