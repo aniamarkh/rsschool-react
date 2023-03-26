@@ -12,7 +12,7 @@ import { PlantData, FormState, ErrorsState } from 'types/types';
 import { plantsData } from '../../data/formData';
 import { findMaxId, handleDateChange } from './utils';
 
-export default class Form extends React.Component<FormState> {
+export default class Form extends React.Component {
   titleInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   dateInput: React.RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
   priceSelect: React.RefObject<HTMLSelectElement> = createRef<HTMLSelectElement>();
@@ -172,7 +172,7 @@ export default class Form extends React.Component<FormState> {
     const stateErr = this.state.errors;
     return (
       <div className="form-container">
-        <form className="form" onSubmit={this.handleSubmit}>
+        <form role="form" className="form" data-testid="form" onSubmit={this.handleSubmit}>
           <h3>🌿 Tell me about your plant 🌱</h3>
           <TextInput label="Name" inputRef={this.titleInput} />
           {stateErr.title && <ErrorMessage errorStr={stateErr.title} />}
