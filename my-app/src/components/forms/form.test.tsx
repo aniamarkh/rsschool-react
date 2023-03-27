@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, test, expect } from 'vitest';
-import { render, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Form from './form';
 
@@ -43,8 +43,16 @@ describe('Form', () => {
 
     fireEvent.change(wrapper.getByLabelText('Name'), { target: { value: 'test Plant' } });
     fireEvent.submit(form);
+
     await waitFor(async () => {
-      expect(await wrapper.getByText('Start with an uppercase letter')).toBeInTheDocument();
+      expect(wrapper.getByText('Start with an uppercase letter')).toBeInTheDocument();
+    });
+
+    fireEvent.change(wrapper.getByLabelText('Delivery Date'), { target: { value: '2023-02-01' } });
+    fireEvent.submit(form);
+
+    await waitFor(async () => {
+      expect(wrapper.getByText('Give us at least one day ;)')).toBeInTheDocument();
     });
   });
 });
