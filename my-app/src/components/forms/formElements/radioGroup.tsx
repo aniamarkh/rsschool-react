@@ -1,11 +1,11 @@
 import React from 'react';
-import { RadioGroupProps } from 'types/types';
+import { PetOption, InputProps } from 'types/types';
 
-export default function RadioGroup(props: RadioGroupProps) {
-  const { label, radioGroupRefs, onChange } = props;
-  const options = [
-    { value: 0, label: 'No' },
-    { value: 1, label: 'Yes' },
+export default function RadioGroup(props: InputProps) {
+  const { label, name, register, registerOptions } = props;
+  const options: PetOption[] = [
+    { value: '', label: 'No' },
+    { value: 'true', label: 'Yes' },
   ];
 
   return (
@@ -15,14 +15,12 @@ export default function RadioGroup(props: RadioGroupProps) {
         {options.map((option, index) => (
           <div key={index}>
             <input
-              ref={radioGroupRefs[index]}
+              {...register(name, registerOptions)}
               type="radio"
-              id={option.label}
-              name={label}
+              id={`${name}-${option.label}`}
               value={option.value}
-              onChange={onChange}
             />
-            <label htmlFor={option.label}>{option.label}</label>
+            <label htmlFor={`${name}-${option.label}`}>{option.label}</label>
           </div>
         ))}
       </div>

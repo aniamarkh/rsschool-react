@@ -1,11 +1,12 @@
 import React from 'react';
 
 export interface ErrorMessageProps {
-  errorStr: string;
+  errorStr: string | undefined;
 }
 
 export default function ErrorMessage(props: ErrorMessageProps) {
   const { errorStr } = props;
+  const displayMessage = errorStr || 'Error';
 
-  return <p className="error-message">{errorStr}</p>;
+  return <p className="error-message">{displayMessage}</p>;
 }

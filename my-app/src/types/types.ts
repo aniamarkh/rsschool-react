@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+import { UseFormRegister, RegisterOptions } from 'react-hook-form';
 
 export interface SearchBarState {
   searchValue: string;
@@ -16,14 +17,10 @@ export interface PlantData {
 
 export interface InputProps {
   label: string;
-  inputRef?: RefObject<HTMLInputElement>;
-  selectRef?: RefObject<HTMLSelectElement>;
-}
-
-export interface RadioGroupProps {
-  label: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  radioGroupRefs: RefObject<HTMLInputElement>[];
+  name: keyof FormValues;
+  register: UseFormRegister<FormValues>;
+  registerOptions: RegisterOptions<FormValues>;
+  onUpload?: (imgSrc: string | null) => void;
 }
 
 export interface PriceObj {
@@ -32,21 +29,15 @@ export interface PriceObj {
 }
 
 export interface PetOption {
-  value: number;
+  value: string;
   label: string;
 }
 
-export interface FormState {
-  errors: ErrorsState;
-  submitted: boolean;
-  formData: PlantData;
-}
-
-export interface ErrorsState {
+export interface FormValues {
   title: string;
   date: string;
   price: string;
   petFriendly: string;
-  imgSrc: string;
-  checkbox: string;
+  imgSrc: FileList;
+  checkbox: boolean;
 }

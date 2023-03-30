@@ -56,6 +56,15 @@ input[type="text"], input[type="date"], select {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  width: 400px;
+}
+
+.input-file .input-title {
+  width: 160px;
+}
+
+input[type="file"] {
+  width: 190px;
 }
 
 .radio {
@@ -92,6 +101,10 @@ button[type="submit"] {
   cursor: pointer;
   outline: inherit;
   transition: all .2s;
+}
+ul {
+  margin: 20px;
+  padding: 0;
 }
 
 button[type="submit"]:hover {
