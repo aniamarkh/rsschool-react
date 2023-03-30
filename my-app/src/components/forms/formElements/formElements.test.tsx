@@ -5,7 +5,7 @@ import Checkbox from './checkboxInput';
 import DateInput from './dateInput';
 import ErrorMessage from './errorMessage';
 import FileInput from './fileInput';
-import PriceInput from './priceInput';
+import PriceInput from './priceSelect';
 import RadioGroup from './radioGroup';
 import TextInput from './textInput';
 import { RadioGroupProps, InputProps } from 'types/types';

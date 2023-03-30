@@ -1,9 +1,11 @@
 import React from 'react';
 
-export default class ErrorMessage extends React.Component<{ errorStr: string }> {
-  render(): React.ReactNode {
-    const { errorStr } = this.props;
+export interface ErrorMessageProps {
+  errorStr: string;
+}
 
-    return <p className="error-message">{errorStr}</p>;
-  }
+export default function ErrorMessage(props: ErrorMessageProps) {
+  const { errorStr } = props;
+
+  return <p className="error-message">{errorStr}</p>;
 }

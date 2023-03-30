@@ -1,16 +1,14 @@
 import React from 'react';
 import { InputProps } from 'types/types';
 
-export default class TextInput extends React.Component<InputProps> {
-  render() {
-    const { label, inputRef } = this.props;
-    return (
-      <div className="input-text">
-        <label className="input-title" htmlFor={label}>
-          {label}
-        </label>
-        <input type="text" id={label} ref={inputRef} />
-      </div>
-    );
-  }
+export default function TextInput(props: InputProps) {
+  const { label, inputRef } = props;
+  return (
+    <div className="input-text">
+      <label className="input-title" htmlFor={label}>
+        {label}
+      </label>
+      <input type="text" id={label} ref={inputRef} />
+    </div>
+  );
 }

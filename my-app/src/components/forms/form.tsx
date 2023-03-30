@@ -2,10 +2,10 @@ import React, { createRef } from 'react';
 import './forms.css';
 import TextInput from './formElements/textInput';
 import DateInput from './formElements/dateInput';
-import PriceSelect from './formElements/priceInput';
+import PriceSelect from './formElements/priceSelect';
 import RadioGroup from './formElements/radioGroup';
 import FileInput from './formElements/fileInput';
-import Checkbox from './formElements/checkboxInput';
+import CheckboxInput from './formElements/checkboxInput';
 import ErrorMessage from './formElements/errorMessage';
 import CardsList from '../cardsList/cardsList';
 import { PlantData, FormState, ErrorsState } from 'types/types';
@@ -191,7 +191,7 @@ export default class Form extends React.Component {
           {stateErr.petFriendly && <ErrorMessage errorStr={stateErr.petFriendly} />}
           <FileInput label="Photo Upload" inputRef={this.imgUpload} />
           {stateErr.imgSrc && <ErrorMessage errorStr={stateErr.imgSrc} />}
-          <Checkbox label="I agree to sell you this plant" inputRef={this.checkboxInput} />
+          <CheckboxInput label="I agree to sell you this plant" inputRef={this.checkboxInput} />
           {stateErr.checkbox && <ErrorMessage errorStr={stateErr.checkbox} />}
 
           {this.state.submitted && (
