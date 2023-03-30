@@ -1,40 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SearchBarState } from 'types/types';
 
-export default class SearchBar extends React.Component {
-  state: SearchBarState = { searchValue: '' };
+export default function SearchBar() {
+  const [searchState, setSearchState] = useState<SearchBarState>({ searchValue: '' });
 
-  componentDidMount() {
+  useEffect(() => {
     const localSearchValue = localStorage.getItem('value');
     if (localSearchValue) {
-      this.setState({
-        searchValue: localSearchValue,
-      });
+      setSearchState({ searchValue: localSearchValue });
     }
-  }
+  }, []);
 
-  componentWillUnmount() {
-    localStorage.setItem('value', this.state.searchValue);
-  }
+  useEffect(() => {
+    localStorage.setItem('value', searchState.searchValue);
+  }, [searchState]);
 
-  handleInput(value: string) {
-    this.setState({ searchValue: value });
-  }
+  const handleInput = (value: string) => {
+    setSearchState({ searchValue: value });
+  };
 
-  render() {
-    const searchValue = this.state.searchValue;
-    return (
-      <div className="search">
-        <input
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            this.handleInput(e.currentTarget.value)
-          }
-          type="text"
-          className="searchField"
-          placeholder="What are you looking for?"
-          value={searchValue}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="search">
+      <input
+        onChange={(e) => handleInput(e.currentTarget.value)}
+        type="text"
+        className="searchField"
+        placeholder="What are you looking for?"
+        value={searchState.searchValue}
+      />
+    </div>
+  );
 }
