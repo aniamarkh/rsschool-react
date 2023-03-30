@@ -1,4 +1,3 @@
-import { RefObject } from 'react';
 import { UseFormRegister, RegisterOptions } from 'react-hook-form';
 
 export interface SearchBarState {
