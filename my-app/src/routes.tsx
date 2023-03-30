@@ -27,18 +27,16 @@ export const headerData = [
   },
 ];
 
-class Router extends React.Component {
-  render() {
-    return (
-      <Routes>
-        <Route path={AppRoutes.main} element={<HomePage />} />
-        <Route path={AppRoutes.about} element={<AboutPage />} />
-        <Route path={AppRoutes.not_found} element={<NotFoundPage />} />
-        <Route path={AppRoutes.form} element={<FormPage />} />
-        <Route path="*" element={<Navigate replace to={AppRoutes.not_found} />} />
-      </Routes>
-    );
-  }
+function Router() {
+  return (
+    <Routes>
+      <Route path={AppRoutes.main} element={<HomePage />} />
+      <Route path={AppRoutes.about} element={<AboutPage />} />
+      <Route path={AppRoutes.not_found} element={<NotFoundPage />} />
+      <Route path={AppRoutes.form} element={<FormPage />} />
+      <Route path="*" element={<Navigate replace to={AppRoutes.not_found} />} />
+    </Routes>
+  );
 }
 
 export default Router;
