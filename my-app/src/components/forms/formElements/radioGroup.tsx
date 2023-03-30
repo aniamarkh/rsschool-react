@@ -11,7 +11,7 @@ export default class RadioGroup extends React.Component<RadioGroupProps> {
 
     return (
       <div className="radio">
-        <p>{label}</p>
+        <p className="input-title">{label}</p>
         <div className="input-radio">
           {options.map((option, index) => (
             <div key={index}>

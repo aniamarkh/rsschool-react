@@ -12,7 +12,9 @@ export default class PriceSelect extends React.Component<InputProps> {
 
     return (
       <div className="input-date">
-        <label htmlFor={label}>{label}</label>
+        <label className="input-title" htmlFor={label}>
+          {label}
+        </label>
         <select defaultValue="default" id={label} ref={selectRef}>
           <option value="default" disabled hidden>
             ...

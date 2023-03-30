@@ -6,7 +6,9 @@ export default class DateInput extends React.Component<InputProps> {
     const { label, inputRef } = this.props;
     return (
       <div className="input-date">
-        <label htmlFor={label}>{label}</label>
+        <label className="input-title" htmlFor={label}>
+          {label}
+        </label>
         <input type="date" id={label} ref={inputRef} />
       </div>
     );

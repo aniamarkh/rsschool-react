@@ -19,7 +19,7 @@
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  gap: .4rem;
+  gap: .2rem;
   justify-content: start;
   background-color: #fafafa;
   color: #241412;
@@ -27,23 +27,35 @@
 
 h3 {
   align-self: center;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 }
 
-.input-text, .input-date, .input-checkbox, .radio, .input-file {
+.input-text, .input-date, .radio {
   width: auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   gap: .5rem;
 }
 
 .input-checkbox {
   font-weight: 600;
 }
+input[type="text"], input[type="date"], select {
+  width: 250px;
+}
 
-.input-radio {
+.input-title {
+  font-weight: 600;
+  margin: 3px 0 0 0;
+}
+
+.input-radio, .input-checkbox, .input-file {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .radio {
@@ -59,7 +71,7 @@ h3 {
 .error-message {
   color: red;
   font-size: .8rem;
-  text-align: start;
+  text-align: center;
 }
 
 .success-message {

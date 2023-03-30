@@ -6,7 +6,9 @@ export default class FileInput extends React.Component<InputProps> {
     const { label, inputRef } = this.props;
     return (
       <div className="input-file">
-        <label htmlFor={label}>{label}</label>
+        <label className="input-title" htmlFor={label}>
+          {label}
+        </label>
         <input accept="image/png, image/jpeg" type="file" id={label} ref={inputRef} />
       </div>
     );

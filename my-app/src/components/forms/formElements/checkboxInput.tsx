@@ -7,7 +7,9 @@ export default class Checkbox extends React.Component<InputProps> {
     return (
       <div className="input-checkbox">
         <input type="checkbox" id={label} ref={inputRef} />
-        <label htmlFor={label}>{label}</label>
+        <label className="input-title" htmlFor={label}>
+          {label}
+        </label>
       </div>
     );
   }

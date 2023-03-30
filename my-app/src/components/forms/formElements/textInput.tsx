@@ -6,7 +6,9 @@ export default class TextInput extends React.Component<InputProps> {
     const { label, inputRef } = this.props;
     return (
       <div className="input-text">
-        <label htmlFor={label}>{label}</label>
+        <label className="input-title" htmlFor={label}>
+          {label}
+        </label>
         <input type="text" id={label} ref={inputRef} />
       </div>
     );
