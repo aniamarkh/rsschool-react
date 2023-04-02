@@ -1,10 +1,8 @@
 import React from 'react';
 import { describe, test, expect } from 'vitest';
 import { render, fireEvent, screen, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Form from './form';
-import { plantsData } from '../../data/formData';
 
 describe('Form', () => {
   test('renders all inputs', async () => {
