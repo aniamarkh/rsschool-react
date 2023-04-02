@@ -1,119 +1,239 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import { useForm, UseFormReturn } from 'react-hook-form';
 import { describe, test, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import Checkbox from './checkboxInput';
 import DateInput from './dateInput';
 import ErrorMessage from './errorMessage';
 import FileInput from './fileInput';
-import PriceInput from './priceSelect';
 import RadioGroup from './radioGroup';
+import PriceSelect from './priceSelect';
 import TextInput from './textInput';
-import { RadioGroupProps, InputProps } from 'types/types';
+import { FormValues } from 'types/types';
 
-const radioGroupRefs = [React.createRef<HTMLInputElement>(), React.createRef<HTMLInputElement>()];
-type AllProps = InputProps | RadioGroupProps;
+interface WrapperProps {
+  children: (methods: UseFormReturn<FormValues>) => ReactNode;
+}
 
-type ComponentWithProps<T extends AllProps> = {
-  Component: React.ComponentType<T>;
-  props: T;
+const Wrapper = ({ children }: WrapperProps) => {
+  const methods = useForm<FormValues>();
+  return <>{children(methods)}</>;
 };
 
-describe('Form Inputs - Render errors', () => {
-  describe('TextInput', () => {
-    test('renders without errors', () => {
-      const wrapper = render(<TextInput label="Name" />);
-      expect(wrapper).toBeTruthy();
-    });
+describe('TextInput tests', () => {
+  test('renders input and label correctly', () => {
+    const wrapper = render(
+      <Wrapper>
+        {(methods) => (
+          <TextInput
+            label="Name"
+            name="title"
+            register={methods.register}
+            registerOptions={{
+              required: "Don't forget to give your plant a name!",
+              validate: (value) =>
+                (value as string).charAt(0) === (value as string).charAt(0).toUpperCase() ||
+                'Start with an uppercase letter',
+            }}
+          />
+        )}
+      </Wrapper>
+    );
+    const label = wrapper.getByText('Name');
+    const input = wrapper.getByLabelText('Name') as HTMLInputElement;
+
+    expect(label).toBeDefined();
+    expect(input).toBeDefined();
+  });
+});
+
+describe('DateInput tests', () => {
+  test('renders input and label correctly', () => {
+    const wrapper = render(
+      <Wrapper>
+        {(methods) => (
+          <DateInput
+            label="Delivery Date"
+            name="date"
+            register={methods.register}
+            registerOptions={{
+              required: 'Select a delivery date',
+              validate: (value) => {
+                const date = new Date(value as string);
+                const today = new Date();
+                return date > today || 'Give us at least one day ;)';
+              },
+            }}
+          />
+        )}
+      </Wrapper>
+    );
+    const label = wrapper.getByText('Delivery Date');
+    const input = wrapper.getByLabelText('Delivery Date') as HTMLInputElement;
+
+    expect(label).toBeDefined();
+    expect(input).toBeDefined();
+  });
+});
+
+describe('PriceSelect tests', () => {
+  test('renders input and label correctly', () => {
+    const wrapper = render(
+      <Wrapper>
+        {(methods) => (
+          <PriceSelect
+            label="Price"
+            name="price"
+            register={methods.register}
+            registerOptions={{
+              required: 'Select a price value',
+              validate: (value) => value !== 'default' || 'Select a price value',
+            }}
+          />
+        )}
+      </Wrapper>
+    );
+    const label = wrapper.getByText('Price');
+    const input = wrapper.getByLabelText('Price') as HTMLInputElement;
+
+    expect(label).toBeDefined();
+    expect(input).toBeDefined();
   });
 
-  describe('Checkbox', () => {
-    test('renders without errors', () => {
-      const wrapper = render(<Checkbox label="I agree to sell you this plant" />);
-      expect(wrapper).toBeTruthy();
-    });
-  });
+  test('displays options and selects a value', async () => {
+    const wrapper = render(
+      <Wrapper>
+        {(methods) => (
+          <PriceSelect
+            label="Price"
+            name="price"
+            register={methods.register}
+            registerOptions={{
+              required: 'Select a price value',
+              validate: (value) => value !== 'default' || 'Select a price value',
+            }}
+          />
+        )}
+      </Wrapper>
+    );
+    const input = wrapper.getByLabelText('Price') as HTMLSelectElement;
 
-  describe('DateInput', () => {
-    test('renders without errors', () => {
-      const wrapper = render(<DateInput label="Delivery Date" />);
-      expect(wrapper).toBeTruthy();
-    });
-  });
+    expect(input.options).toHaveLength(4);
 
-  describe('FileInput', () => {
-    test('renders without errors', () => {
-      const wrapper = render(<FileInput label="Photo Upload" />);
-      expect(wrapper).toBeTruthy();
-    });
-  });
+    fireEvent.change(input, { target: { value: '26' } });
 
-  describe('PriceSelect', () => {
-    test('renders without errors', () => {
-      const wrapper = render(<PriceInput label="Price" />);
-      expect(wrapper).toBeTruthy();
-    });
-  });
-
-  describe('RadioGroup', () => {
-    test('renders without errors', () => {
-      const wrapper = render(
-        <RadioGroup label="Is pet-friendly?" radioGroupRefs={radioGroupRefs} />
-      );
-      expect(wrapper).toBeTruthy();
+    await waitFor(() => {
+      expect(input.value).toBe('26');
     });
   });
 });
 
-describe('Form Inputs Labels', () => {
-  test('renders labels correctly', () => {
-    const componentsWithProps: ComponentWithProps<AllProps>[] = [
-      { Component: Checkbox, props: { label: 'Checkbox label' } },
-      { Component: DateInput, props: { label: 'DateInput label' } },
-      { Component: TextInput, props: { label: 'TextInput label' } },
-      {
-        Component: PriceInput,
-        props: { label: 'PriceSelect label' },
-      },
-      { Component: FileInput, props: { label: 'FileInput label' } },
-    ];
+describe('RadioGroup tests', () => {
+  test('renders input and label correctly', () => {
+    const wrapper = render(
+      <Wrapper>
+        {(methods) => (
+          <RadioGroup
+            label="RadioGroup"
+            name="petFriendly"
+            register={methods.register}
+            registerOptions={{
+              required: 'Tell if your plant is pet-friendly',
+            }}
+          />
+        )}
+      </Wrapper>
+    );
+    const label = wrapper.getByText('RadioGroup');
+    const radioButtons = wrapper.getAllByLabelText(/(No|Yes)/) as HTMLInputElement[];
 
-    componentsWithProps.forEach(({ Component, props }) => {
-      const { getByText } = render(React.createElement(Component, props));
-      expect(getByText(props.label)).toBeDefined();
+    expect(label).toBeDefined();
+    expect(radioButtons).toHaveLength(2);
+    expect(radioButtons[0].value).toBe('');
+    expect(radioButtons[1].value).toBe('true');
+  });
+});
+
+describe('FileInput tests', () => {
+  test('renders input and label correctly', () => {
+    const wrapper = render(
+      <Wrapper>
+        {(methods) => (
+          <FileInput
+            label="Upload an image"
+            name="imgSrc"
+            register={methods.register}
+            registerOptions={{
+              required: "Don't forget to upload a picture of your plant!",
+            }}
+          />
+        )}
+      </Wrapper>
+    );
+    const label = wrapper.getByText('Upload an image');
+    const input = wrapper.getByLabelText('Upload an image') as HTMLInputElement;
+
+    expect(label).toBeDefined();
+    expect(input).toBeDefined();
+  });
+
+  test('accepts and displays a selected file', async () => {
+    const wrapper = render(
+      <Wrapper>
+        {(methods) => (
+          <FileInput
+            label="Upload an image"
+            name="imgSrc"
+            register={methods.register}
+            registerOptions={{
+              required: "Don't forget to upload a picture of your plant!",
+            }}
+          />
+        )}
+      </Wrapper>
+    );
+    const input = wrapper.getByLabelText('Upload an image') as HTMLInputElement;
+    const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
+
+    fireEvent.change(input, { target: { files: [file] } });
+
+    await waitFor(() => {
+      if (input.files) {
+        expect(input.files[0]).toStrictEqual(file);
+        expect(input.files).toHaveLength(1);
+      }
     });
   });
 });
 
-describe('Form Inputs Correct input type', () => {
-  test('renders input with correct type', () => {
-    const componentsWithPropsAndType = [
-      {
-        Component: Checkbox,
-        props: { label: 'Checkbox label', inputRef: React.createRef<HTMLInputElement>() },
-        type: 'checkbox',
-      },
-      {
-        Component: DateInput,
-        props: { label: 'DateInput label', inputRef: React.createRef<HTMLInputElement>() },
-        type: 'date',
-      },
-      {
-        Component: TextInput,
-        props: { label: 'TextInput label', inputRef: React.createRef<HTMLInputElement>() },
-        type: 'text',
-      },
-      {
-        Component: FileInput,
-        props: { label: 'FileInput label', inputRef: React.createRef<HTMLInputElement>() },
-        type: 'file',
-      },
-    ];
+describe('Checkbox tests', () => {
+  test('renders label and checkbox correctly', () => {
+    const wrapper = render(
+      <Wrapper>
+        {(methods) => (
+          <Checkbox
+            label="Agree"
+            name="checkbox"
+            register={methods.register}
+            registerOptions={{
+              required: "Don't you agree to sell us this plant? 👉👈",
+            }}
+          />
+        )}
+      </Wrapper>
+    );
+    const label = wrapper.getByText('Agree');
+    const checkbox = wrapper.getByLabelText('Agree') as HTMLInputElement;
 
-    componentsWithPropsAndType.forEach(({ Component, props, type }) => {
-      const { container } = render(React.createElement(Component, props));
-      const input = container.querySelector(`input[type="${type}"]`);
-      expect(input).not.toBeNull();
-    });
+    expect(label).toBeDefined();
+    expect(checkbox).toBeDefined();
+    expect(checkbox.checked).toBe(false);
+  });
+
+  test('renders error message text correctly', () => {
+    const errorStr = 'This is an error message';
+    const { getByText } = render(<ErrorMessage errorStr={errorStr} />);
+    expect(getByText(errorStr)).toBeDefined();
   });
 });
 
