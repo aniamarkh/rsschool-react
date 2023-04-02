@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './forms.css';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import TextInput from './formElements/textInput';
 import DateInput from './formElements/dateInput';
 import PriceSelect from './formElements/priceSelect';
@@ -11,18 +12,25 @@ import CardsList from '../cardsList/cardsList';
 import { PlantData, FormValues } from 'types/types';
 import { plantsData } from '../../data/formData';
 import { findMaxId, handleDateChange } from './utils';
-import { useForm, SubmitHandler } from 'react-hook-form';
 
 export default function Form() {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
   } = useForm<FormValues>({
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
   });
+
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+
+  const onFieldUpdate = () => {
+    if (submissionSuccess) {
+      setSubmissionSuccess(false);
+    }
+  };
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     const newCard: PlantData = {
@@ -35,13 +43,13 @@ export default function Form() {
       date: handleDateChange(data.date),
     };
     plantsData.push(newCard);
-    console.log(plantsData);
+    setSubmissionSuccess(true);
     reset();
   };
 
   return (
     <div className="form-container">
-      <form onSubmit={handleSubmit(onSubmit)} className="form" role="form">
+      <form onSubmit={handleSubmit(onSubmit)} className="form" role="form" onChange={onFieldUpdate}>
         <h3>🌿 Tell me about your plant 🌱</h3>
         <TextInput
           label="Name"
@@ -106,6 +114,9 @@ export default function Form() {
           }}
         />
         {errors.checkbox && <ErrorMessage errorStr={errors.checkbox.message} />}
+        {isSubmitSuccessful && submissionSuccess && (
+          <div className="success-message">Your plant has been added!</div>
+        )}
 
         <button type="submit">Submit</button>
       </form>
