@@ -1,12 +1,21 @@
 import React from 'react';
 import { describe, test, expect } from 'vitest';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { render, fireEvent, screen, act, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Form from './form';
+import { PlantData } from 'types/types';
 
 describe('Form', () => {
+  const cards: PlantData[] = [];
+  const updateCards = (card: PlantData) => cards.push(card);
+  let wrapper: RenderResult;
+
+  beforeEach(() => {
+    wrapper = render(<Form cards={cards} updateCards={updateCards} />);
+  });
+
   test('renders all inputs', async () => {
-    const wrapper = render(<Form />);
+    const form = wrapper.getByRole('form');
     const nameInput = wrapper.getByLabelText('Name') as HTMLInputElement;
     const dateInput = wrapper.getByLabelText('Delivery Date') as HTMLInputElement;
     const priceSelect = wrapper.getByLabelText('Price') as HTMLSelectElement;
@@ -18,6 +27,7 @@ describe('Form', () => {
     ) as HTMLInputElement;
     const submitButton = wrapper.getByText('Submit');
 
+    expect(form).toBeDefined();
     expect(nameInput).toBeDefined();
     expect(dateInput).toBeDefined();
     expect(priceSelect).toBeDefined();
@@ -29,7 +39,6 @@ describe('Form', () => {
   });
 
   test('inputs are filled', async () => {
-    render(<Form />);
     const nameInput = screen.getByLabelText('Name') as HTMLInputElement;
     const dateInput = screen.getByLabelText('Delivery Date') as HTMLInputElement;
     const priceSelect = screen.getByLabelText('Price') as HTMLSelectElement;
@@ -64,8 +73,6 @@ describe('Form', () => {
   });
 
   test('renders errors', async () => {
-    const wrapper = render(<Form />);
-
     const form = await wrapper.findByRole('form');
     fireEvent.submit(form);
     expect(await wrapper.findByText("Don't forget to give your plant a name!")).toBeInTheDocument();

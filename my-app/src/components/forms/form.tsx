@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './forms.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import TextInput from './formElements/textInput';
@@ -8,12 +8,15 @@ import RadioGroup from './formElements/radioGroup';
 import FileInput from './formElements/fileInput';
 import CheckboxInput from './formElements/checkboxInput';
 import ErrorMessage from './formElements/errorMessage';
-import CardsList from '../cardsList/cardsList';
 import { PlantData, FormValues } from 'types/types';
-import { plantsData } from '../../data/formData';
 import { findMaxId, handleDateChange } from './utils';
 
-export default function Form() {
+interface FormProps {
+  cards: PlantData[];
+  updateCards: (card: PlantData) => void;
+}
+
+export default function Form({ cards, updateCards }: FormProps) {
   const {
     register,
     handleSubmit,
@@ -24,17 +27,9 @@ export default function Form() {
     reValidateMode: 'onSubmit',
   });
 
-  const [submissionSuccess, setSubmissionSuccess] = useState(false);
-
-  const onFieldUpdate = () => {
-    if (submissionSuccess) {
-      setSubmissionSuccess(false);
-    }
-  };
-
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     const newCard: PlantData = {
-      id: findMaxId(plantsData),
+      id: findMaxId(cards),
       imgSrc: URL.createObjectURL(data.imgSrc[0]),
       imgAlt: data.title,
       title: data.title,
@@ -42,14 +37,13 @@ export default function Form() {
       price: Number(data.price),
       date: handleDateChange(data.date),
     };
-    plantsData.push(newCard);
-    setSubmissionSuccess(true);
+    updateCards(newCard);
     reset();
   };
 
   return (
     <div className="form-container">
-      <form onSubmit={handleSubmit(onSubmit)} className="form" role="form" onChange={onFieldUpdate}>
+      <form onSubmit={handleSubmit(onSubmit)} className="form" role="form" data-testid="form">
         <h3>🌿 Tell me about your plant 🌱</h3>
         <TextInput
           label="Name"
@@ -114,13 +108,10 @@ export default function Form() {
           }}
         />
         {errors.checkbox && <ErrorMessage errorStr={errors.checkbox.message} />}
-        {isSubmitSuccessful && submissionSuccess && (
-          <div className="success-message">Your plant has been added!</div>
-        )}
+        {isSubmitSuccessful && <div className="success-message">Your plant has been added!</div>}
 
         <button type="submit">Submit</button>
       </form>
-      <CardsList data={plantsData} />
     </div>
   );
 }
