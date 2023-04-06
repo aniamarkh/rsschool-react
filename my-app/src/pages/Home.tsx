@@ -17,7 +17,11 @@ export default function HomePage() {
   }, [search]);
 
   const handleSearch = (value: string) => {
-    fetchSearchData(value).then((result: TmdbMovieResult[]) => getCards(result));
+    if (value.trim() === '') {
+      fetchPopular().then((result: TmdbMovieResult[]) => getCards(result));
+    } else {
+      fetchSearchData(value).then((result: TmdbMovieResult[]) => getCards(result));
+    }
   };
 
   const getCards = (result: TmdbMovieResult[]) => {
