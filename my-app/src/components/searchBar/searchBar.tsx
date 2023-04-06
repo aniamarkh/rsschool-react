@@ -11,10 +11,9 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     event.preventDefault();
     const input = event.currentTarget.querySelector('input');
     if (input) {
-      const inputValue = input.value;
-      setSearchState(inputValue);
-      onSearch(inputValue);
-      localStorage.setItem('value', inputValue);
+      setSearchState(input.value);
+      onSearch(input.value);
+      localStorage.setItem('value', input.value);
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import SearchBar from '../components/searchBar/searchBar';
 import CardsList from '../components/moviesList/moviesList';
 import { MovieData, TmdbMovieResult } from '../types/types';
@@ -8,20 +8,17 @@ export default function HomePage() {
   const [cards, setCards] = useState<MovieData[]>([]);
   const [search] = useState<string>(localStorage.getItem('search') || '');
 
+  const fetchData = useCallback((value: string) => {
+    const fetchFn = value.trim() === '' ? fetchPopular : () => fetchSearchData(value);
+    fetchFn().then((result: TmdbMovieResult[]) => getCards(result));
+  }, []);
+
   useEffect(() => {
-    if (search !== '') {
-      fetchSearchData(search).then((result: TmdbMovieResult[]) => getCards(result));
-    } else {
-      fetchPopular().then((result: TmdbMovieResult[]) => getCards(result));
-    }
-  }, [search]);
+    fetchData(search);
+  }, [search, fetchData]);
 
   const handleSearch = (value: string) => {
-    if (value.trim() === '') {
-      fetchPopular().then((result: TmdbMovieResult[]) => getCards(result));
-    } else {
-      fetchSearchData(value).then((result: TmdbMovieResult[]) => getCards(result));
-    }
+    fetchData(value);
   };
 
   const getCards = (result: TmdbMovieResult[]) => {
