@@ -2,51 +2,22 @@ import React, { useEffect, useState } from 'react';
 import SearchBar from '../components/searchBar/searchBar';
 import CardsList from '../components/moviesList/moviesList';
 import { MovieData, TmdbMovieResult } from '../types/types';
+import { fetchSearchData, fetchPopular } from '../api/api';
 
 export default function HomePage() {
-  const [cards, setCards] = useState<MovieData[]>(
-    localStorage.getItem('cards') ? JSON.parse(localStorage.getItem('cards') as string) : []
-  );
+  const [cards, setCards] = useState<MovieData[]>([]);
+  const [search] = useState<string>(localStorage.getItem('search') || '');
 
   useEffect(() => {
-    const storedCards = localStorage.getItem('cards');
-    if (storedCards) {
-      setCards(JSON.parse(storedCards));
+    if (search !== '') {
+      fetchSearchData(search).then((result: TmdbMovieResult[]) => getCards(result));
+    } else {
+      fetchPopular().then((result: TmdbMovieResult[]) => getCards(result));
     }
-  }, []);
-
-  async function fetchData(value: string) {
-    console.log(value);
-    // show loading in UI
-    const url = 'https://api.themoviedb.org/3/search/movie?';
-    const api_key = 'api_key=6a130d2f0e9c0261931fa93ffcdac91a';
-    const query = '&query=';
-    const lang = '&language=en-US';
-    const adult = '&include_adult=false';
-
-    try {
-      const response = await fetch(url + api_key + query + value + lang + adult);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const results = data.results;
-
-      getCards(results);
-    } catch (error) {
-      console.error('Error fetching movie data:', error);
-      // show error in UI
-    }
-  }
-
-  useEffect(() => {
-    localStorage.setItem('cards', JSON.stringify(cards));
-  }, [cards]);
+  }, [search]);
 
   const handleSearch = (value: string) => {
-    fetchData(value);
+    fetchSearchData(value).then((result: TmdbMovieResult[]) => getCards(result));
   };
 
   const getCards = (result: TmdbMovieResult[]) => {
