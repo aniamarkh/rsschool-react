@@ -1,36 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { SearchBarState } from 'types/types';
+import React, { useState, useEffect, FormEvent } from 'react';
 
-export default function SearchBar() {
-  const [searchState, setSearchState] = useState<SearchBarState>({ searchValue: '' });
+interface SearchBarProps {
+  onSearch: (value: string) => void;
+}
+
+export default function SearchBar({ onSearch }: SearchBarProps) {
+  const [searchState, setSearchState] = useState<string>(localStorage.getItem('search') || '');
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    const input = event.currentTarget.querySelector('input');
+    if (input) {
+      const inputValue = input.value;
+      setSearchState(inputValue);
+      onSearch(inputValue);
+      localStorage.setItem('value', inputValue);
+    }
+  };
 
   useEffect(() => {
-    const localSearchValue = localStorage.getItem('value');
+    localStorage.setItem('search', searchState);
+  }, [searchState]);
+
+  useEffect(() => {
+    const localSearchValue = localStorage.getItem('search');
     if (localSearchValue) {
-      setSearchState({ searchValue: localSearchValue });
+      setSearchState(localSearchValue);
     }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('value', searchState.searchValue);
-  }, [searchState]);
-
-  const handleInput = (value: string) => {
-    setSearchState({ searchValue: value });
-  };
-
   return (
-    <div className="search">
+    <form className="search" onSubmit={handleSubmit}>
       <input
-        onChange={(e) => handleInput(e.currentTarget.value)}
-        value={searchState.searchValue}
+        defaultValue={searchState}
         type="text"
         className="search__field"
-        placeholder="What are you looking for?"
+        placeholder="What movie are you looking for?"
       />
       <button type="submit" className="search__btn">
         <span className="material-symbols-outlined">search</span>
       </button>
-    </div>
+    </form>
   );
 }
