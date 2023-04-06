@@ -8,7 +8,12 @@ export default function TextInput(props: InputProps) {
       <label className="input-title" htmlFor={label}>
         {label}
       </label>
-      <input type="text" id={label} {...register(name, registerOptions)} />
+      <input
+        className="input-text__field"
+        type="text"
+        id={label}
+        {...register(name, registerOptions)}
+      />
     </div>
   );
 }

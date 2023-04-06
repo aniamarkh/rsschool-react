@@ -23,11 +23,14 @@ export default function SearchBar() {
     <div className="search">
       <input
         onChange={(e) => handleInput(e.currentTarget.value)}
-        type="text"
-        className="searchField"
-        placeholder="What are you looking for?"
         value={searchState.searchValue}
+        type="text"
+        className="search__field"
+        placeholder="What are you looking for?"
       />
+      <button type="submit" className="search__btn">
+        <span className="material-symbols-outlined">search</span>
+      </button>
     </div>
   );
 }

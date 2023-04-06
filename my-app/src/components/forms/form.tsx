@@ -110,7 +110,9 @@ export default function Form({ cards, updateCards }: FormProps) {
         {errors.checkbox && <ErrorMessage errorStr={errors.checkbox.message} />}
         {isSubmitSuccessful && <div className="success-message">Your plant has been added!</div>}
 
-        <button type="submit">Submit</button>
+        <button className="form__submit-btn" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );
