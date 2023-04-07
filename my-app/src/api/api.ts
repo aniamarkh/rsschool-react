@@ -1,3 +1,5 @@
+import { TmdbMovieResult } from '../types/types';
+
 const urlSearch = 'https://api.themoviedb.org/3/search/movie?';
 const urlPopular = 'https://api.themoviedb.org/3/movie/popular?';
 const api_key = 'api_key=6a130d2f0e9c0261931fa93ffcdac91a';
@@ -5,7 +7,7 @@ const query = '&query=';
 const lang = '&language=en-US';
 const adult = '&include_adult=false';
 
-export const fetchSearchData = async (value: string) => {
+export const fetchSearchData = async (value: string): Promise<TmdbMovieResult[] | string> => {
   try {
     const response = await fetch(urlSearch + api_key + query + value + lang + adult);
 
@@ -19,7 +21,7 @@ export const fetchSearchData = async (value: string) => {
     return results;
   } catch (error) {
     console.error('Error fetching movie data:', error);
-    return error;
+    return 'Error fetching movie data. Please try again later 😓';
   }
 };
 
@@ -37,6 +39,6 @@ export const fetchPopular = async () => {
     return results;
   } catch (error) {
     console.error('Error fetching movie data:', error);
-    return error;
+    return 'Error fetching movie data. Please try again later 😓';
   }
 };

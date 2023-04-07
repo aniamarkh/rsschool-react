@@ -5,13 +5,28 @@ import { TmdbMovieResult } from '../types/types';
 import { fetchSearchData, fetchPopular } from '../api/api';
 
 export default function HomePage() {
-  const [movies, setMovies] = useState<TmdbMovieResult[]>([]);
+  const [movies, setMovies] = useState<TmdbMovieResult[] | null>([]);
   const [search] = useState<string>(localStorage.getItem('search') || '');
+  const [error, setError] = useState<string>('');
+  const [loaded, setLoaded] = useState<boolean>(false);
 
-  const fetchData = useCallback((value: string) => {
-    const fetchFn = value.trim() === '' ? fetchPopular : () => fetchSearchData(value);
-    fetchFn().then((result: TmdbMovieResult[]) => setMovies(result));
-  }, []);
+  const fetchData = useCallback(
+    (value: string) => {
+      setLoaded(false);
+      const fetchFn = value.trim() === '' ? fetchPopular : () => fetchSearchData(value);
+      fetchFn().then((result: TmdbMovieResult[] | string) => {
+        setLoaded(true);
+        if (typeof result === 'string') {
+          setError(result);
+          setMovies(null);
+        } else {
+          setMovies(result);
+          setError('');
+        }
+      });
+    },
+    [setError]
+  );
 
   useEffect(() => {
     fetchData(search);
@@ -25,6 +40,9 @@ export default function HomePage() {
     <div className="home">
       <SearchBar onSearch={handleSearch} />
       <MoviesList data={movies} />
+      {loaded === false && <p>Loading...</p>}
+      {error !== '' && <h4 className="home__error">{error}</h4>}
+      {movies?.length === 0 && loaded === true && <p>No movies found 🤔</p>}
     </div>
   );
 }
