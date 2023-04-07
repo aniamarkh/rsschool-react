@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, useCallback } from 'react';
 
 interface SearchBarProps {
   onSearch: (value: string) => void;
@@ -28,6 +28,12 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     }
   }, []);
 
+  const inputField = useCallback((inputElement: HTMLInputElement) => {
+    if (inputElement) {
+      inputElement.focus();
+    }
+  }, []);
+
   return (
     <form className="search" onSubmit={handleSubmit}>
       <input
@@ -35,6 +41,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
         type="text"
         className="search__field"
         placeholder="What movie are you looking for?"
+        ref={inputField}
       />
       <button type="submit" className="search__btn">
         <span className="material-symbols-outlined">search</span>
