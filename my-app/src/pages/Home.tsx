@@ -40,7 +40,7 @@ export default function HomePage() {
     <div className="home">
       <SearchBar onSearch={handleSearch} />
       <MoviesList data={movies} />
-      {loaded === false && <p>Loading...</p>}
+      {loaded === false && <div className="loading"></div>}
       {error !== '' && <h4 className="home__error">{error}</h4>}
       {movies?.length === 0 && loaded === true && <p>No movies found 🤔</p>}
     </div>

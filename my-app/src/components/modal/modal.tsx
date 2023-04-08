@@ -19,7 +19,7 @@ export default function ModalContent({ data, onClose }: ModalProps) {
 
   return (
     <div className="modal__window" onClick={handleBackdropClick}>
-      {movie === null && <h2>Loading...</h2>}
+      {movie === null && <div className="loading"></div>}
       {movie !== null && (
         <div className="modal" ref={modalRef}>
           <img className="modal_img" src={movie?.poster} alt={movie?.title + 'poster'} />
