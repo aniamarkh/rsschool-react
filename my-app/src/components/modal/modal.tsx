@@ -10,15 +10,6 @@ interface ModalProps {
 export default function ModalContent({ data, onClose }: ModalProps) {
   const movie = data;
   const modalRef = useRef<HTMLDivElement>(null);
-  const [error, setError] = useState<string>('');
-
-  useEffect(() => {
-    if (typeof data === 'string') {
-      console.log(typeof data);
-      setError(data);
-      console.log('error');
-    }
-  }, [data, setError]);
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -28,9 +19,9 @@ export default function ModalContent({ data, onClose }: ModalProps) {
 
   return (
     <div className="modal__window" onClick={handleBackdropClick}>
-      {error !== '' && (
+      {typeof movie === 'string' && (
         <div className="modal__error" ref={modalRef}>
-          <h4>{error}</h4>
+          <h4>{movie}</h4>
         </div>
       )}
       {typeof movie !== 'string' && (
