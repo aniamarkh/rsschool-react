@@ -1,7 +1,6 @@
 import React from 'react';
 import { describe, test, expect } from 'vitest';
 import { render, RenderResult } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { server } from '../../api/mock/server';
 import ModalContent from './modal';
 import { ModalData } from '../../types/types';
