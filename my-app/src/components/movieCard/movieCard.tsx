@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import './movieCard.css';
-import { MovieData, MovieResponse, ModalData } from '../../types/types';
+import { MovieData, ModalData } from '../../types/types';
 import { fetchMovie } from '../../api/api';
 import ModalContent from '../modal/modal';
 
@@ -29,7 +29,7 @@ export default function MovieCard(props: MovieData) {
 
   const getModalData = async () => {
     setModalDataLoader(true);
-    fetchMovie(id).then((result: MovieResponse | string) => {
+    fetchMovie(id).then((result) => {
       setModalDataLoader(false);
       if (typeof result === 'string') {
         setModalData(result);
@@ -56,7 +56,7 @@ export default function MovieCard(props: MovieData) {
   };
 
   return (
-    <div className="movie-card__wrapper">
+    <div className="movie-card__wrapper" role="movie-card">
       {showModal &&
         createPortal(
           <ModalContent data={modalData} onClose={() => setShowModal(false)} />,

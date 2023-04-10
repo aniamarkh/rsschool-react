@@ -42,8 +42,9 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
         className="search__field"
         placeholder="What movie are you looking for?"
         ref={inputField}
+        role="search-input"
       />
-      <button type="submit" className="search__btn">
+      <button type="submit" className="search__btn" role="search-submit">
         <span className="material-symbols-outlined">search</span>
       </button>
     </form>
