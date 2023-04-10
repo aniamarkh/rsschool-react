@@ -56,13 +56,13 @@ export default function MovieCard(props: MovieData) {
   };
 
   return (
-    <div className="movie-card__wrapper" role="movie-card">
+    <div className="movie-card__wrapper">
       {showModal &&
         createPortal(
           <ModalContent data={modalData} onClose={() => setShowModal(false)} />,
           document.body
         )}
-      <div className="movie-card" data-id={id} onClick={getModalData}>
+      <div className="movie-card" role="movie-card" onClick={getModalData}>
         {modalDataLoader && (
           <div className="modal__window card__overlay">
             <div className="loading"></div>
