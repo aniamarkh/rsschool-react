@@ -13,7 +13,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     if (input) {
       setSearchState(input.value);
       onSearch(input.value);
-      localStorage.setItem('value', input.value);
+      localStorage.setItem('search', input.value);
     }
   };
 
