@@ -15,7 +15,7 @@
   z-index: 2;
   background-color: #fafafa;
   border-radius: 10px;
-  padding: 0 20px;
+  padding: 0 0 0 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -134,4 +134,14 @@
   height: 100%;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
+}
+
+.close__btn {
+  width: 40px;
+  height: 30px;
+  border: none;
+  background-color: inherit;
+  font-size: 2rem;
+  margin: 5px;
+  cursor: pointer;
 }

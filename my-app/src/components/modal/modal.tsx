@@ -22,6 +22,9 @@ export default function ModalContent({ data, onClose }: ModalProps) {
       {typeof movie === 'string' && (
         <div className="modal__error" ref={modalRef}>
           <h4>{movie}</h4>
+          <button className="close__btn" onClick={onClose}>
+            <span className="material-symbols-outlined">close</span>
+          </button>
         </div>
       )}
       {typeof movie !== 'string' && (
@@ -65,6 +68,9 @@ export default function ModalContent({ data, onClose }: ModalProps) {
               )}
             </div>
           </div>
+          <button className="close__btn" onClick={onClose}>
+            <span className="material-symbols-outlined">close</span>
+          </button>
         </div>
       )}
     </div>
