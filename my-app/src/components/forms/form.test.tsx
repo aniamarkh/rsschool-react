@@ -3,12 +3,12 @@ import { describe, test, expect, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Form from './form';
-import { PlantData } from 'types/types';
+import { CardData } from 'types/types';
 
 describe('Form', () => {
   global.URL.createObjectURL = vi.fn();
-  const cards: PlantData[] = [];
-  const updateCards = (card: PlantData) => cards.push(card);
+  const cards: CardData[] = [];
+  const updateCards = (card: CardData) => cards.push(card);
   let form: HTMLFormElement;
 
   beforeEach(() => {
@@ -18,38 +18,36 @@ describe('Form', () => {
 
   test('renders without errors', () => {
     expect(form).toBeInTheDocument();
-    expect(screen.getByLabelText('Name')).toBeInTheDocument();
-    expect(screen.getByLabelText('Delivery Date')).toBeInTheDocument();
-    expect(screen.getByLabelText('Price')).toBeInTheDocument();
+    expect(screen.getByLabelText('Title')).toBeInTheDocument();
+    expect(screen.getByLabelText('Release Date')).toBeInTheDocument();
+    expect(screen.getByLabelText('Choose a genre')).toBeInTheDocument();
     expect(screen.getByLabelText('Yes')).toBeInTheDocument();
     expect(screen.getByLabelText('No')).toBeInTheDocument();
-    expect(screen.getByLabelText('Upload an image')).toBeInTheDocument();
-    expect(screen.getByLabelText('I agree to sell you this plant')).toBeInTheDocument();
+    expect(screen.getByLabelText('Upload a poster')).toBeInTheDocument();
+    expect(screen.getByLabelText('I agree to add this movie')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
   });
 
   test('validate formElements', async () => {
     fireEvent.submit(form);
 
-    expect(await screen.findByText("Don't forget to give your plant a name!")).toBeInTheDocument();
-    expect(await screen.findByText('Select a delivery date')).toBeInTheDocument();
-    expect(await screen.findByText('Select a price value')).toBeInTheDocument();
+    expect(await screen.findByText("Don't forget to give your movie a title!")).toBeInTheDocument();
+    expect(await screen.findByText('Select a release date')).toBeInTheDocument();
+    expect(await screen.findByText('Please choose a genre for your movie')).toBeInTheDocument();
     expect(
-      await screen.findByText("Tell if your plant is pet-friendly, it's important")
+      await screen.findByText("Tell if this movie is another bad sequel, it's important")
     ).toBeInTheDocument();
     expect(
-      await screen.findByText("Don't forget to upload a picture of your plant!")
+      await screen.findByText("Don't forget to upload a poster for your movie!")
     ).toBeInTheDocument();
-    expect(
-      await screen.findByText("Don't you agree to sell us this plant? 👉👈")
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Don't you agree to add this movie? 👉👈")).toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'test' } });
+    fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'test' } });
     fireEvent.submit(form);
     expect(await screen.findByText('Start with an uppercase letter')).toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText('Delivery Date'), { target: { value: '2023-02-01' } });
+    fireEvent.change(screen.getByLabelText('Release Date'), { target: { value: '2100-10-10' } });
     fireEvent.submit(form);
-    expect(await screen.findByText('Give us at least one day ;)')).toBeInTheDocument();
+    expect(await screen.findByText('Select a valid release date in the past')).toBeInTheDocument();
   });
 });

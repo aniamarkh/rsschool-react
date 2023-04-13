@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Form from '../components/forms/form';
 import CardsList from '../components/cardsList/cardsList';
-import { PlantData } from '../types/types';
+import { CardData } from '../types/types';
 
 export default function FormPage() {
-  const [cards, setCards] = useState<PlantData[]>([]);
+  const [cards, setCards] = useState<CardData[]>([]);
 
-  const updateCards = (card: PlantData) => {
+  const updateCards = (card: CardData) => {
     setCards([...cards, card]);
   };
 

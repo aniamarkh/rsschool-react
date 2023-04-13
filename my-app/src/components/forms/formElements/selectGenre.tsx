@@ -1,12 +1,12 @@
 import React from 'react';
-import { InputProps, PriceObj } from 'types/types';
+import { InputProps, GenreObj } from 'types/types';
 
-export default function PriceSelect(props: InputProps) {
+export default function GenreSelect(props: InputProps) {
   const { label, name, register, registerOptions } = props;
-  const priceOptions: PriceObj[] = [
-    { value: 26, label: '26' },
-    { value: 30, label: '30' },
-    { value: 35, label: '35' },
+  const priceOptions: GenreObj[] = [
+    { value: 'Comedy', label: 'Comedy' },
+    { value: 'Drama', label: 'Drama' },
+    { value: 'Horror', label: 'Horror' },
   ];
 
   return (

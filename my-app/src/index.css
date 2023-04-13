@@ -120,8 +120,9 @@ header {
   margin-bottom: 10px;
 }
 
-.desc-price {
+.desc-sequel {
   font-weight: bold;
+  text-align: center;
 }
 
 .search {

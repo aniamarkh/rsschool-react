@@ -2,26 +2,26 @@ import React from 'react';
 import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import CardsList from './cardsList';
-import { PlantData } from 'types/types';
+import { CardData } from 'types/types';
 
-const data: PlantData[] = [
+const data: CardData[] = [
   {
     id: 1,
-    imgSrc: 'assets/img/fiddleleaf.jpg',
-    imgAlt: 'Fiddle Leaf Fig',
-    title: 'Fiddle Leaf Fig',
-    petFriendly: false,
-    price: 26,
-    date: '04.04.2023',
+    imgSrc: 'movieposter1.jpg',
+    imgAlt: 'Movie Title 1 poster',
+    title: 'Movie Title 1',
+    isSequel: false,
+    genre: 'Comedy',
+    date: '10.01.1996',
   },
   {
     id: 2,
-    imgSrc: 'assets/img/snake.jpg',
-    imgAlt: 'Snake Plant',
-    title: 'Snake Plant',
-    petFriendly: true,
-    price: 13,
-    date: '02.04.2023',
+    imgSrc: 'movieposter2.jpg',
+    imgAlt: 'Movie Title 2 poster',
+    title: 'Movie Title 2',
+    isSequel: true,
+    genre: 'Horror',
+    date: '10.01.1997',
   },
 ];
 

@@ -2,40 +2,40 @@ import React from 'react';
 import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/react';
 import Card from './card';
-import { PlantData } from '../../types/types';
+import { CardData } from '../../types/types';
 
-const samplePlantData: PlantData = {
+const sampleCardData: CardData = {
   id: 1,
-  imgSrc: 'fiddleleaf.jpg',
-  imgAlt: 'Fiddle Leaf Fig',
-  title: 'Fiddle Leaf Fig',
-  petFriendly: false,
-  price: 26,
-  date: '69.06.9069',
+  imgSrc: 'movieposter.jpg',
+  imgAlt: 'Movie Title poster',
+  title: 'Movie Title',
+  isSequel: false,
+  genre: 'Comedy',
+  date: '10.01.1996',
 };
 
 describe('Card', () => {
   test('renders without errors', () => {
-    const wrapper = render(<Card {...samplePlantData} />);
+    const wrapper = render(<Card {...sampleCardData} />);
     expect(wrapper).toBeTruthy();
   });
 
   test('displays correct title', () => {
-    const wrapper = render(<Card {...samplePlantData} />);
-    expect(wrapper.getByText('FIDDLE LEAF FIG')).toBeDefined();
+    const wrapper = render(<Card {...sampleCardData} />);
+    expect(wrapper.getByText(sampleCardData.title.toUpperCase())).toBeDefined();
   });
 
-  test('displays correct pet-friendly status', () => {
-    const { getByText } = render(<Card {...samplePlantData} />);
-    expect(getByText('🐱🐶: dangerous! ❌')).toBeDefined();
+  test('displays correct sequel status', () => {
+    const { getByText } = render(<Card {...sampleCardData} />);
+    expect(getByText(`⭐️it's not another bad sequel!⭐️`)).toBeDefined();
   });
 
-  test('displays correct stock', () => {
-    const { getByText } = render(<Card {...samplePlantData} />);
-    expect(getByText('Price: $26')).toBeDefined();
+  test('displays correct genre', () => {
+    const { getByText } = render(<Card {...sampleCardData} />);
+    expect(getByText(`genre: ${sampleCardData.genre}`)).toBeDefined();
   });
   test('displays correct date', () => {
-    const { getByText } = render(<Card {...samplePlantData} />);
-    expect(getByText('delivery: 69.06.9069')).toBeDefined();
+    const { getByText } = render(<Card {...sampleCardData} />);
+    expect(getByText(`release: ${sampleCardData.date}`)).toBeDefined();
   });
 });

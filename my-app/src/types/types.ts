@@ -4,13 +4,17 @@ export interface SearchBarState {
   searchValue: string;
 }
 
-export interface PlantData {
+export interface FormCardsState {
+  cards: CardData[];
+}
+
+export interface CardData {
   id: number;
   imgSrc: string;
   imgAlt: string;
   title: string;
-  petFriendly: boolean | null;
-  price: number;
+  isSequel: boolean | null;
+  genre: string;
   date: string;
 }
 
@@ -22,12 +26,12 @@ export interface InputProps {
   onUpload?: (imgSrc: string | null) => void;
 }
 
-export interface PriceObj {
-  value: number;
+export interface GenreObj {
+  value: string;
   label: string;
 }
 
-export interface PetOption {
+export interface sequelOption {
   value: string;
   label: string;
 }
@@ -35,8 +39,8 @@ export interface PetOption {
 export interface FormValues {
   title: string;
   date: string;
-  price: string;
-  petFriendly: string;
+  genre: string;
+  isSequel: string;
   imgSrc: FileList;
   checkbox: boolean;
 }

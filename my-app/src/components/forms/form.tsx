@@ -3,17 +3,17 @@ import './forms.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import TextInput from './formElements/textInput';
 import DateInput from './formElements/dateInput';
-import PriceSelect from './formElements/priceSelect';
+import GenreSelect from './formElements/selectGenre';
 import RadioGroup from './formElements/radioGroup';
 import FileInput from './formElements/fileInput';
 import CheckboxInput from './formElements/checkboxInput';
 import ErrorMessage from './formElements/errorMessage';
-import { PlantData, FormValues } from 'types/types';
+import { CardData, FormValues } from 'types/types';
 import { findMaxId, handleDateChange } from './utils';
 
 interface FormProps {
-  cards: PlantData[];
-  updateCards: (card: PlantData) => void;
+  cards: CardData[];
+  updateCards: (card: CardData) => void;
 }
 
 export default function Form({ cards, updateCards }: FormProps) {
@@ -28,13 +28,13 @@ export default function Form({ cards, updateCards }: FormProps) {
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    const newCard: PlantData = {
+    const newCard: CardData = {
       id: findMaxId(cards),
       imgSrc: URL.createObjectURL(data.imgSrc[0]),
       imgAlt: data.title,
       title: data.title,
-      petFriendly: data.petFriendly ? true : false,
-      price: Number(data.price),
+      isSequel: data.isSequel ? true : false,
+      genre: data.genre,
       date: handleDateChange(data.date),
     };
     updateCards(newCard);
@@ -44,13 +44,13 @@ export default function Form({ cards, updateCards }: FormProps) {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit(onSubmit)} className="form" role="form" data-testid="form">
-        <h3>🌿 Tell me about your plant 🌱</h3>
+        <h3>Want to add a movie? 🎬</h3>
         <TextInput
-          label="Name"
+          label="Title"
           name="title"
           register={register}
           registerOptions={{
-            required: "Don't forget to give your plant a name!",
+            required: "Don't forget to give your movie a title!",
             validate: (value) =>
               (value as string).charAt(0) === (value as string).charAt(0).toUpperCase() ||
               'Start with an uppercase letter',
@@ -58,57 +58,57 @@ export default function Form({ cards, updateCards }: FormProps) {
         />
         {errors.title && <ErrorMessage errorStr={errors.title.message} />}
         <DateInput
-          label="Delivery Date"
+          label="Release Date"
           name="date"
           register={register}
           registerOptions={{
-            required: 'Select a delivery date',
+            required: 'Select a release date',
             validate: (value) => {
               const date = new Date(value as string);
               const today = new Date();
-              return date > today || 'Give us at least one day ;)';
+              return date < today || 'Select a valid release date in the past';
             },
           }}
         />
         {errors.date && <ErrorMessage errorStr={errors.date.message} />}
-        <PriceSelect
-          label="Price"
-          name="price"
+        <GenreSelect
+          label="Choose a genre"
+          name="genre"
           register={register}
           registerOptions={{
-            required: 'Select a price value',
-            validate: (value) => value !== 'default' || 'Select a price value',
+            required: 'Please choose a genre for your movie',
+            validate: (value) => value !== 'default' || 'Please choose a genre for your movie',
           }}
         />
-        {errors.price && <ErrorMessage errorStr={errors.price.message} />}
+        {errors.genre && <ErrorMessage errorStr={errors.genre.message} />}
         <RadioGroup
-          label="Is pet-friendly?"
-          name="petFriendly"
+          label="Is it another bad sequel?"
+          name="isSequel"
           register={register}
           registerOptions={{
-            required: "Tell if your plant is pet-friendly, it's important",
+            required: "Tell if this movie is another bad sequel, it's important",
           }}
         />
-        {errors.petFriendly && <ErrorMessage errorStr={errors.petFriendly.message} />}
+        {errors.isSequel && <ErrorMessage errorStr={errors.isSequel.message} />}
         <FileInput
-          label="Upload an image"
+          label="Upload a poster"
           name="imgSrc"
           register={register}
           registerOptions={{
-            required: "Don't forget to upload a picture of your plant!",
+            required: "Don't forget to upload a poster for your movie!",
           }}
         />
         {errors.imgSrc && <ErrorMessage errorStr={errors.imgSrc.message} />}
         <CheckboxInput
-          label="I agree to sell you this plant"
+          label="I agree to add this movie"
           name="checkbox"
           register={register}
           registerOptions={{
-            required: "Don't you agree to sell us this plant? 👉👈",
+            required: "Don't you agree to add this movie? 👉👈",
           }}
         />
         {errors.checkbox && <ErrorMessage errorStr={errors.checkbox.message} />}
-        {isSubmitSuccessful && <div className="success-message">Your plant has been added!</div>}
+        {isSubmitSuccessful && <div className="success-message">Your movie has been added!</div>}
 
         <button className="form__submit-btn" type="submit">
           Submit

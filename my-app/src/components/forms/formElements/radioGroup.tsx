@@ -1,9 +1,9 @@
 import React from 'react';
-import { PetOption, InputProps } from 'types/types';
+import { sequelOption, InputProps } from 'types/types';
 
 export default function RadioGroup(props: InputProps) {
   const { label, name, register, registerOptions } = props;
-  const options: PetOption[] = [
+  const options: sequelOption[] = [
     { value: '', label: 'No' },
     { value: 'true', label: 'Yes' },
   ];

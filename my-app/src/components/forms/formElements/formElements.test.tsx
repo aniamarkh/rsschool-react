@@ -7,7 +7,7 @@ import DateInput from './dateInput';
 import ErrorMessage from './errorMessage';
 import FileInput from './fileInput';
 import RadioGroup from './radioGroup';
-import PriceSelect from './priceSelect';
+import GenreSelect from './selectGenre';
 import TextInput from './textInput';
 import { FormValues } from 'types/types';
 
@@ -26,11 +26,11 @@ describe('TextInput tests', () => {
       <Wrapper>
         {(methods) => (
           <TextInput
-            label="Name"
+            label="Title"
             name="title"
             register={methods.register}
             registerOptions={{
-              required: "Don't forget to give your plant a name!",
+              required: "Don't forget to give your movie a title!",
               validate: (value) =>
                 (value as string).charAt(0) === (value as string).charAt(0).toUpperCase() ||
                 'Start with an uppercase letter',
@@ -39,8 +39,8 @@ describe('TextInput tests', () => {
         )}
       </Wrapper>
     );
-    const label = wrapper.getByText('Name');
-    const input = wrapper.getByLabelText('Name') as HTMLInputElement;
+    const label = wrapper.getByText('Title');
+    const input = wrapper.getByLabelText('Title') as HTMLInputElement;
 
     expect(label).toBeDefined();
     expect(input).toBeDefined();
@@ -53,23 +53,23 @@ describe('DateInput tests', () => {
       <Wrapper>
         {(methods) => (
           <DateInput
-            label="Delivery Date"
+            label="Release Date"
             name="date"
             register={methods.register}
             registerOptions={{
-              required: 'Select a delivery date',
+              required: 'Select a release date',
               validate: (value) => {
                 const date = new Date(value as string);
                 const today = new Date();
-                return date > today || 'Give us at least one day ;)';
+                return date > today || 'Select a valid release date in the past';
               },
             }}
           />
         )}
       </Wrapper>
     );
-    const label = wrapper.getByText('Delivery Date');
-    const input = wrapper.getByLabelText('Delivery Date') as HTMLInputElement;
+    const label = wrapper.getByText('Release Date');
+    const input = wrapper.getByLabelText('Release Date') as HTMLInputElement;
 
     expect(label).toBeDefined();
     expect(input).toBeDefined();
@@ -81,20 +81,20 @@ describe('PriceSelect tests', () => {
     const wrapper = render(
       <Wrapper>
         {(methods) => (
-          <PriceSelect
-            label="Price"
-            name="price"
+          <GenreSelect
+            label="Choose a genre"
+            name="genre"
             register={methods.register}
             registerOptions={{
-              required: 'Select a price value',
-              validate: (value) => value !== 'default' || 'Select a price value',
+              required: 'Please choose a genre for your movie',
+              validate: (value) => value !== 'default' || 'Please choose a genre for your movie',
             }}
           />
         )}
       </Wrapper>
     );
-    const label = wrapper.getByText('Price');
-    const input = wrapper.getByLabelText('Price') as HTMLInputElement;
+    const label = wrapper.getByText('Choose a genre');
+    const input = wrapper.getByLabelText('Choose a genre') as HTMLInputElement;
 
     expect(label).toBeDefined();
     expect(input).toBeDefined();
@@ -104,26 +104,26 @@ describe('PriceSelect tests', () => {
     const wrapper = render(
       <Wrapper>
         {(methods) => (
-          <PriceSelect
-            label="Price"
-            name="price"
+          <GenreSelect
+            label="Choose a genre"
+            name="genre"
             register={methods.register}
             registerOptions={{
-              required: 'Select a price value',
-              validate: (value) => value !== 'default' || 'Select a price value',
+              required: 'Please choose a genre for your movie',
+              validate: (value) => value !== 'default' || 'Please choose a genre for your movie',
             }}
           />
         )}
       </Wrapper>
     );
-    const input = wrapper.getByLabelText('Price') as HTMLSelectElement;
+    const input = wrapper.getByLabelText('Choose a genre') as HTMLSelectElement;
 
     expect(input.options).toHaveLength(4);
 
-    fireEvent.change(input, { target: { value: '26' } });
+    fireEvent.change(input, { target: { value: 'Comedy' } });
 
     await waitFor(() => {
-      expect(input.value).toBe('26');
+      expect(input.value).toBe('Comedy');
     });
   });
 });
@@ -134,17 +134,17 @@ describe('RadioGroup tests', () => {
       <Wrapper>
         {(methods) => (
           <RadioGroup
-            label="RadioGroup"
-            name="petFriendly"
+            label="Is it another bad sequel?"
+            name="isSequel"
             register={methods.register}
             registerOptions={{
-              required: 'Tell if your plant is pet-friendly',
+              required: `Tell if this movie is another bad sequel, it's important`,
             }}
           />
         )}
       </Wrapper>
     );
-    const label = wrapper.getByText('RadioGroup');
+    const label = wrapper.getByText('Is it another bad sequel?');
     const radioButtons = wrapper.getAllByLabelText(/(No|Yes)/) as HTMLInputElement[];
 
     expect(label).toBeDefined();
@@ -160,18 +160,18 @@ describe('FileInput tests', () => {
       <Wrapper>
         {(methods) => (
           <FileInput
-            label="Upload an image"
+            label="Upload a poster"
             name="imgSrc"
             register={methods.register}
             registerOptions={{
-              required: "Don't forget to upload a picture of your plant!",
+              required: "Don't forget to upload a poster for your movie!",
             }}
           />
         )}
       </Wrapper>
     );
-    const label = wrapper.getByText('Upload an image');
-    const input = wrapper.getByLabelText('Upload an image') as HTMLInputElement;
+    const label = wrapper.getByText('Upload a poster');
+    const input = wrapper.getByLabelText('Upload a poster') as HTMLInputElement;
 
     expect(label).toBeDefined();
     expect(input).toBeDefined();
@@ -182,17 +182,17 @@ describe('FileInput tests', () => {
       <Wrapper>
         {(methods) => (
           <FileInput
-            label="Upload an image"
+            label="Upload a poster"
             name="imgSrc"
             register={methods.register}
             registerOptions={{
-              required: "Don't forget to upload a picture of your plant!",
+              required: "Don't forget to upload a poster for your movie!",
             }}
           />
         )}
       </Wrapper>
     );
-    const input = wrapper.getByLabelText('Upload an image') as HTMLInputElement;
+    const input = wrapper.getByLabelText('Upload a poster') as HTMLInputElement;
     const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
 
     fireEvent.change(input, { target: { files: [file] } });
@@ -212,18 +212,18 @@ describe('Checkbox tests', () => {
       <Wrapper>
         {(methods) => (
           <Checkbox
-            label="Agree"
+            label="I agree to add this movie"
             name="checkbox"
             register={methods.register}
             registerOptions={{
-              required: "Don't you agree to sell us this plant? 👉👈",
+              required: "Don't you agree to add this movie? 👉👈",
             }}
           />
         )}
       </Wrapper>
     );
-    const label = wrapper.getByText('Agree');
-    const checkbox = wrapper.getByLabelText('Agree') as HTMLInputElement;
+    const label = wrapper.getByText('I agree to add this movie');
+    const checkbox = wrapper.getByLabelText('I agree to add this movie') as HTMLInputElement;
 
     expect(label).toBeDefined();
     expect(checkbox).toBeDefined();
