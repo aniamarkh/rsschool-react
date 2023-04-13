@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useCallback } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { searchBarAction } from '../../store/searchBarSlice';
@@ -8,15 +8,13 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ onSearch }: SearchBarProps) {
-  const searchValue = useSelector((state: RootState) => state.searchValue);
+  const searchState = useSelector((state: RootState) => state.searchValue);
   const dispatch = useDispatch();
-  const [searchState, setSearchState] = useState(searchValue);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const input = event.currentTarget.querySelector('input');
     if (input) {
-      setSearchState({ searchValue: input.value });
       onSearch(input.value);
       dispatch(searchBarAction.setValue({ searchValue: input.value }));
     }
