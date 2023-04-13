@@ -2,23 +2,24 @@ import fetch from 'cross-fetch';
 import { MovieResponse, TmdbMovieResult } from '../types/types';
 
 export const fetchSearchData = async (value: string): Promise<TmdbMovieResult[] | string> => {
-  try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=6a130d2f0e9c0261931fa93ffcdac91a&query=${value}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const results = data.results;
-
-    return results;
-  } catch (error) {
-    console.error('Error fetching movie data:', error);
-    return 'Error fetching movies data. Please try again later 😓';
-  }
+  return fetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=6a130d2f0e9c0261931fa93ffcdac91a&query=${value}`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      let results;
+      data.results.length > 0 ? (results = data.results) : (results = 'No movies found 🤔');
+      return results;
+    })
+    .catch((error) => {
+      console.error('Error fetching movie data:', error);
+      return 'Error fetching movies data. Please try again later 😓';
+    });
 };
 
 export const fetchPopular = (): Promise<TmdbMovieResult[] | string> => {
@@ -32,7 +33,8 @@ export const fetchPopular = (): Promise<TmdbMovieResult[] | string> => {
       return response.json();
     })
     .then((data) => {
-      const results = data.results;
+      let results;
+      data.results.length > 0 ? (results = data.results) : (results = 'No movies found 🤔');
       return results;
     })
     .catch((error) => {

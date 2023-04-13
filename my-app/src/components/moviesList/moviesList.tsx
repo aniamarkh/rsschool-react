@@ -3,7 +3,7 @@ import MovieCard from '../movieCard/movieCard';
 import { TmdbMovieResult, MovieData } from '../../types/types';
 
 interface MoviesListProps {
-  data: TmdbMovieResult[] | null;
+  data: TmdbMovieResult[] | string;
 }
 
 export default function MoviesList(props: MoviesListProps) {
@@ -31,13 +31,18 @@ export default function MoviesList(props: MoviesListProps) {
   };
 
   return (
-    <ul className="card-list">
-      {data &&
-        getCards(data).map((item: MovieData) => (
-          <li key={item.id} className="card-list__item">
-            <MovieCard {...item} />
-          </li>
-        ))}
-    </ul>
+    <div className="card-list__wrapper">
+      {typeof data === 'string' && <h4 className="home__error">{data}</h4>}
+      {typeof data !== 'string' && (
+        <ul className="card-list">
+          {data &&
+            getCards(data).map((item: MovieData) => (
+              <li key={item.id} className="card-list__item">
+                <MovieCard {...item} />
+              </li>
+            ))}
+        </ul>
+      )}
+    </div>
   );
 }
