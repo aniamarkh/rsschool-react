@@ -5,7 +5,7 @@ export interface SearchBarState {
 }
 
 export interface FormCardsState {
-  cards: CardData[];
+  formCards: CardData[];
 }
 
 export interface CardData {
