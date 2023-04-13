@@ -1,32 +1,26 @@
-import React, { useState, useEffect, FormEvent, useCallback } from 'react';
+import React, { useState, FormEvent, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { searchBarAction } from '../../store/searchBarSlice';
 
 interface SearchBarProps {
   onSearch: (value: string) => void;
 }
 
 export default function SearchBar({ onSearch }: SearchBarProps) {
-  const [searchState, setSearchState] = useState<string>(localStorage.getItem('search') || '');
+  const searchValue = useSelector((state: RootState) => state.searchValue);
+  const dispatch = useDispatch();
+  const [searchState, setSearchState] = useState(searchValue);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const input = event.currentTarget.querySelector('input');
     if (input) {
-      setSearchState(input.value);
+      setSearchState({ searchValue: input.value });
       onSearch(input.value);
-      localStorage.setItem('search', input.value);
+      dispatch(searchBarAction.setValue({ searchValue: input.value }));
     }
   };
-
-  useEffect(() => {
-    localStorage.setItem('search', searchState);
-  }, [searchState]);
-
-  useEffect(() => {
-    const localSearchValue = localStorage.getItem('search');
-    if (localSearchValue) {
-      setSearchState(localSearchValue);
-    }
-  }, []);
 
   const inputField = useCallback((inputElement: HTMLInputElement) => {
     if (inputElement) {
@@ -37,7 +31,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
   return (
     <form className="search" onSubmit={handleSubmit}>
       <input
-        defaultValue={searchState}
+        defaultValue={searchState.searchValue}
         type="text"
         className="search__field"
         placeholder="What movie are you looking for?"
