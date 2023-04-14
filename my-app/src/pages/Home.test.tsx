@@ -2,12 +2,20 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import HomePage from './Home';
 import { server } from '../api/mock/server';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 describe('HomePage tests', () => {
   beforeAll(() => server.listen());
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
-  beforeEach(() => render(<HomePage />));
+  beforeEach(() =>
+    render(
+      <Provider store={store}>
+        <HomePage />
+      </Provider>
+    )
+  );
 
   test('renders homepage with popular movies', async () => {
     expect(await screen.findByText(/Popular Sample Movie/i)).toBeDefined();

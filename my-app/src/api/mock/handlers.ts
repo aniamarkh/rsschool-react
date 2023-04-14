@@ -1,4 +1,5 @@
 import { rest } from 'msw';
+import { MovieResponse } from 'types/types';
 
 export const popularResult = {
   results: [
@@ -58,7 +59,7 @@ export const searchResult = {
   ],
 };
 
-export const movieByIdResult = {
+export const movieByIdResult: MovieResponse = {
   adult: false,
   backdrop_path: '/path/to/backdrop.jpg',
   belongs_to_collection: null,
@@ -114,7 +115,7 @@ export const handlers = [
 
   rest.get('https://api.themoviedb.org/3/movie/:id', (req, res, ctx) => {
     const { id } = req.params;
-    if (id === '1') {
+    if (id === '101') {
       return res(ctx.status(200), ctx.json(movieByIdResult));
     }
   }),

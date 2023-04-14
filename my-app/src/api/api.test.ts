@@ -19,7 +19,7 @@ describe('api test', () => {
   });
 
   test('fetch by id', async () => {
-    const result = await fetchMovie(1);
+    const result = await fetchMovie(101);
     expect(result).toEqual(movieByIdResult);
   });
 
