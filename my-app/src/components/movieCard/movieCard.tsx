@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import './movieCard.css';
-import { MovieData, ModalData } from '../../types/types';
+import { TmdbMovieResult, MovieResponse } from '../../types/types';
 import { fetchMovie } from '../../api/api';
 import ModalContent from '../modal/modal';
 
-export default function MovieCard(props: MovieData) {
-  const { id, poster, date, title } = props;
+export default function MovieCard(props: TmdbMovieResult) {
+  const movie = props;
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [modalData, setModalData] = useState<ModalData | null | string>(null);
+  const [modalData, setModalData] = useState<MovieResponse | string>('');
   const [modalDataLoader, setModalDataLoader] = useState<boolean>(false);
 
   const handleDate = (date: string): string => {
@@ -29,28 +29,9 @@ export default function MovieCard(props: MovieData) {
 
   const getModalData = async () => {
     setModalDataLoader(true);
-    fetchMovie(id).then((result) => {
+    fetchMovie(movie.id).then((result) => {
       setModalDataLoader(false);
-      if (typeof result === 'string') {
-        setModalData(result);
-      } else {
-        const modalData: ModalData = {
-          title: result.title,
-          original_title: result.original_title,
-          poster:
-            result.poster_path === null
-              ? 'assets/img/noposter.jpeg'
-              : 'https://image.tmdb.org/t/p/w500' + result.poster_path,
-          genres: result.genres.map((item) => item.name),
-          release: handleDate(result.release_date),
-          rate: Math.round(result.vote_average),
-          overview: result.overview,
-          homepage: result.homepage,
-          country: result.production_countries.map((item) => item.name),
-          prod: result.production_companies.map((item) => item.name),
-        };
-        setModalData(modalData);
-      }
+      setModalData(result);
       setShowModal(true);
     });
   };
@@ -68,9 +49,17 @@ export default function MovieCard(props: MovieData) {
             <div className="loading"></div>
           </div>
         )}
-        <img className="movie-card__img" src={poster} alt={title + ' poster'} />
-        <h4 className="movie-card__title">{handleTitle(title)}</h4>
-        <p>{handleDate(date)}</p>
+        <img
+          className="movie-card__img"
+          src={
+            movie.poster_path === null
+              ? 'assets/img/noposter.jpeg'
+              : 'https://image.tmdb.org/t/p/w500' + movie.poster_path
+          }
+          alt={movie.title + ' poster'}
+        />
+        <h4 className="movie-card__title">{handleTitle(movie.title)}</h4>
+        <p>{handleDate(movie.release_date)}</p>
       </div>
     </div>
   );

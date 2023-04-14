@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { searchBarReducer } from './searchBarSlice';
+import { searchReducer } from './searchBarSlice';
+import { resultCardsReducer } from './apiCardsSlice';
 import { formReducer } from './formCardsSlice';
 
 export const store = configureStore({
   reducer: {
-    searchValue: searchBarReducer,
+    search: searchReducer,
+    apiCards: resultCardsReducer,
     formCards: formReducer,
   },
 });

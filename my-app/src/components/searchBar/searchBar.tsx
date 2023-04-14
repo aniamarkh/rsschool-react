@@ -1,22 +1,17 @@
 import React, { FormEvent, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { searchBarAction } from '../../store/searchBarSlice';
+import { searchAction } from '../../store/searchBarSlice';
 
-interface SearchBarProps {
-  onSearch: (value: string) => void;
-}
-
-export default function SearchBar({ onSearch }: SearchBarProps) {
-  const searchState = useSelector((state: RootState) => state.searchValue);
+export default function SearchBar() {
+  const searchState = useSelector((state: RootState) => state.search);
   const dispatch = useDispatch();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const input = event.currentTarget.querySelector('input');
     if (input) {
-      onSearch(input.value);
-      dispatch(searchBarAction.setValue({ searchValue: input.value }));
+      dispatch(searchAction.setValue({ searchValue: input.value }));
     }
   };
 

@@ -4,6 +4,10 @@ export interface SearchBarState {
   searchValue: string;
 }
 
+export interface ApiCardsState {
+  apiCards: TmdbMovieResult[] | string;
+}
+
 export interface FormCardsState {
   formCards: CardData[];
 }
@@ -60,13 +64,6 @@ export interface TmdbMovieResult {
   vote_count: number;
   video: boolean;
   vote_average: number;
-}
-
-export interface MovieData {
-  id: number;
-  poster: string;
-  date: string;
-  title: string;
 }
 
 export interface MovieResponse {
