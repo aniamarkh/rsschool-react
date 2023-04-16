@@ -1,5 +1,11 @@
 import { rest } from 'msw';
 import { MovieResponse } from 'types/types';
+import { fetch, Headers, Request, Response } from 'cross-fetch';
+
+global.fetch = fetch;
+global.Headers = Headers;
+global.Request = Request;
+global.Response = Response;
 
 export const popularResult = {
   results: [
@@ -106,6 +112,7 @@ export const handlers = [
   rest.get('https://api.themoviedb.org/3/movie/popular', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(popularResult));
   }),
+
   rest.get('https://api.themoviedb.org/3/search/movie', (req, res, ctx) => {
     const query = req.url.searchParams.get('query');
     if (query === 'movie') {

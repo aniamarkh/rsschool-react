@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import MoviesList from './moviesList';
 import { store } from '../../store/store';
 import { server } from '../../api/mock/server';
-import { popularResult } from '../../api/mock/handlers';
 
 describe('Movies List', () => {
   let wrapper: RenderResult;
@@ -33,6 +32,5 @@ describe('Movies List', () => {
     expect(await wrapper.findAllByRole('movie-card')).toHaveLength(1);
     const cardsNumber = wrapper.container.getElementsByClassName('card-list__item');
     expect(cardsNumber.length).toBe(1);
-    expect(store.getState().apiCards.apiCards).toEqual(popularResult.results);
   });
 });

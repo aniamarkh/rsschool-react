@@ -1,42 +1,44 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import MovieCard from '../movieCard/movieCard';
 import { TmdbMovieResult } from '../../types/types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { fetchPopular, fetchSearchData } from '../../api/api';
-import { resultCardsAction } from '../../store/apiCardsSlice';
+import { useLazyFetchPopularQuery, useLazySearchMoviesQuery } from '../../api/api';
 
 export default function MoviesList() {
-  const searchState = useSelector((state: RootState) => state.search);
-  const cardsState = useSelector((state: RootState) => state.apiCards);
-  const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState<boolean>(false);
-
-  const fetchData = useCallback(
-    (value: string) => {
-      setLoaded(false);
-      const fetchFn = value.trim() === '' ? fetchPopular : () => fetchSearchData(value);
-      fetchFn().then((result: TmdbMovieResult[] | string) => {
-        dispatch(resultCardsAction.setValue({ apiCards: result }));
-        setLoaded(true);
-      });
-    },
-    [dispatch]
-  );
+  const searchState = useSelector((state: RootState) => state.search.searchValue);
+  const [
+    triggerSearchMovies,
+    { data: searchData, error: searchError, isFetching: searchFetching },
+  ] = useLazySearchMoviesQuery();
+  const [
+    triggerFetchPopular,
+    { data: popularData, error: popularError, isFetching: popularFetching },
+  ] = useLazyFetchPopularQuery();
 
   useEffect(() => {
-    fetchData(searchState.searchValue);
-  }, [searchState.searchValue, fetchData]);
+    if (searchState) {
+      triggerSearchMovies(searchState);
+    } else {
+      triggerFetchPopular();
+    }
+  }, [searchState, triggerSearchMovies, triggerFetchPopular]);
 
+  const cards = searchState ? searchData : popularData;
+  const error = searchState ? searchError : popularError;
+  const isFetching = searchState ? searchFetching : popularFetching;
   return (
     <div className="card-list__wrapper">
-      {!loaded && <div className="loading"></div>}
-      {loaded && typeof cardsState.apiCards === 'string' && (
-        <h4 className="home__error">{cardsState.apiCards}</h4>
+      {isFetching && <div className="loading"></div>}
+      {!isFetching && error && (
+        <h4 className="home__error">Error fetching movies data. Please try again later 😓</h4>
       )}
-      {loaded && typeof cardsState.apiCards !== 'string' && (
+      {!isFetching && cards && cards.length === 0 && !error && (
+        <h4 className="home__error">No movies found 😓</h4>
+      )}
+      {!isFetching && cards && cards.length > 0 && !error && (
         <ul className="card-list">
-          {cardsState.apiCards.map((item: TmdbMovieResult) => (
+          {cards.map((item: TmdbMovieResult) => (
             <li key={item.id} className="card-list__item">
               <MovieCard {...item} />
             </li>

@@ -1,63 +1,23 @@
-import fetch from 'cross-fetch';
 import { MovieResponse, TmdbMovieResult } from '../types/types';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const fetchSearchData = async (value: string): Promise<TmdbMovieResult[] | string> => {
-  return fetch(
-    `https://api.themoviedb.org/3/search/movie?api_key=6a130d2f0e9c0261931fa93ffcdac91a&query=${value}`
-  )
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      let results;
-      data.results.length > 0 ? (results = data.results) : (results = 'No movies found 🤔');
-      return results;
-    })
-    .catch((error) => {
-      console.error('Error fetching movie data:', error);
-      return 'Error fetching movies data. Please try again later 😓';
-    });
-};
+export const movieApi = createApi({
+  reducerPath: 'movieApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3' }),
+  endpoints: (builder) => ({
+    searchMovies: builder.query<TmdbMovieResult[], string>({
+      query: (value) => `search/movie?api_key=6a130d2f0e9c0261931fa93ffcdac91a&query=${value}`,
+      transformResponse: (response: { results: TmdbMovieResult[] }) => response.results,
+    }),
+    fetchPopular: builder.query<TmdbMovieResult[], void>({
+      query: () => 'movie/popular?api_key=6a130d2f0e9c0261931fa93ffcdac91a',
+      transformResponse: (response: { results: TmdbMovieResult[] }) => response.results,
+    }),
+    fetchMovie: builder.query<MovieResponse, number>({
+      query: (id) => `movie/${id}?api_key=6a130d2f0e9c0261931fa93ffcdac91a`,
+    }),
+  }),
+});
 
-export const fetchPopular = (): Promise<TmdbMovieResult[] | string> => {
-  return fetch(
-    'https://api.themoviedb.org/3/movie/popular?api_key=6a130d2f0e9c0261931fa93ffcdac91a'
-  )
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      let results;
-      data.results.length > 0 ? (results = data.results) : (results = 'No movies found 🤔');
-      return results;
-    })
-    .catch((error) => {
-      console.error('Error fetching movie data:', error);
-      return 'Error fetching movies data. Please try again later 😓';
-    });
-};
-
-export const fetchMovie = async (id: number): Promise<MovieResponse | string> => {
-  try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=6a130d2f0e9c0261931fa93ffcdac91a`
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const results = data;
-
-    return results;
-  } catch (error) {
-    console.error('Error fetching movie data:', error);
-    return 'Error fetching movie data. Please try again later 😓';
-  }
-};
+export const { useLazySearchMoviesQuery, useLazyFetchPopularQuery, useLazyFetchMovieQuery } =
+  movieApi;
