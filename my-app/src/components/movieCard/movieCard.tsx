@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import './movieCard.css';
-import { TmdbMovieResult, MovieResponse } from '../../types/types';
-import { fetchMovie } from '../../api/api';
+import { TmdbMovieResult } from '../../types/types';
 import ModalContent from '../modal/modal';
 
 export default function MovieCard(props: TmdbMovieResult) {
   const movie = props;
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [modalData, setModalData] = useState<MovieResponse | string>('');
-  const [modalDataLoader, setModalDataLoader] = useState<boolean>(false);
 
   const handleDate = (date: string): string => {
     if (date) {
@@ -27,28 +24,18 @@ export default function MovieCard(props: TmdbMovieResult) {
     }
   };
 
-  const getModalData = async () => {
-    setModalDataLoader(true);
-    fetchMovie(movie.id).then((result) => {
-      setModalDataLoader(false);
-      setModalData(result);
-      setShowModal(true);
-    });
+  const showModalWindow = async () => {
+    setShowModal(true);
   };
 
   return (
     <div className="movie-card__wrapper">
       {showModal &&
         createPortal(
-          <ModalContent data={modalData} onClose={() => setShowModal(false)} />,
+          <ModalContent data={movie.id} onClose={() => setShowModal(false)} />,
           document.body
         )}
-      <div className="movie-card" role="movie-card" onClick={getModalData}>
-        {modalDataLoader && (
-          <div className="modal__window card__overlay">
-            <div className="loading"></div>
-          </div>
-        )}
+      <div className="movie-card" role="movie-card" onClick={showModalWindow}>
         <img
           className="movie-card__img"
           src={

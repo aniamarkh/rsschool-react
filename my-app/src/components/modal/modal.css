@@ -11,26 +11,26 @@
   z-index: 1;
 }
 
-.modal__error {
-  z-index: 2;
-  background-color: #fafafa;
-  border-radius: 10px;
-  padding: 0 0 0 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: auto;
-  height: auto;
-}
-
 .modal {
   z-index: 2;
   background-color: #fafafa;
   border-radius: 10px;
-  display: flex;
-  flex-direction: row;
   width: 50%;
   height: 70%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.modal h4 {
+  margin: auto auto;
+}
+
+.modal__movie {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 }
 
 .modal__bottom {
@@ -41,6 +41,8 @@
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   width: 45%;
+  object-fit:cover;
+
 }
 
 .modal_overview {
