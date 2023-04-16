@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const movieApi = createApi({
   reducerPath: 'movieApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3', fetchFn: fetch }),
   endpoints: (builder) => ({
     searchMovies: builder.query<TmdbMovieResult[], string>({
       query: (value) => `search/movie?api_key=6a130d2f0e9c0261931fa93ffcdac91a&query=${value}`,

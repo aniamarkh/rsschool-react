@@ -6,6 +6,8 @@ import { server } from '../../api/mock/server';
 import MovieCard from './movieCard';
 import { popularResult } from '../../api/mock/handlers';
 import { TmdbMovieResult } from 'types/types';
+import { store } from '../../store/store';
+import { Provider } from 'react-redux';
 
 const movieData: TmdbMovieResult = popularResult.results[0];
 
@@ -23,7 +25,11 @@ describe('Card', () => {
   afterAll(() => server.close());
   let wrapper: RenderResult;
   beforeEach(() => {
-    wrapper = render(<MovieCard {...movieData} />);
+    wrapper = render(
+      <Provider store={store}>
+        <MovieCard {...movieData} />
+      </Provider>
+    );
   });
 
   test('renders without errors', () => {
