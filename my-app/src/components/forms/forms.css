@@ -1,0 +1,111 @@
+.form-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.form {
+  width: 350px;
+  height: auto;
+  margin: 30px;
+  padding: 20px;
+  border-radius: 15px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  justify-content: start;
+  background-color: #fafafa;
+  color: #241412;
+}
+
+h3 {
+  align-self: center;
+  margin: 0 0 10px 0;
+}
+
+.input-text, .input-date, .radio {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+}
+
+.input-checkbox {
+  font-weight: 600;
+}
+.input-text__field, input[type="date"], select {
+  width: 150px;
+}
+
+.input-title {
+  font-weight: 600;
+  margin: 3px 0 0 0;
+}
+
+.input-radio, .input-checkbox, .input-file {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.input-file {
+  flex-direction: column;
+}
+
+input[type="file"] {
+  width: 180px;
+}
+
+.radio {
+  align-items: center;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.error-message {
+  color: red;
+  font-size: .8rem;
+  text-align: center;
+}
+
+.success-message {
+  align-self: center;
+  color: green;
+}
+
+.form__submit-btn {
+  background: none;
+  background-color: #c4c4c4;
+  width: 80px;
+  border-radius: 15px;
+  align-self: center;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  transition: all .2s;
+}
+
+ul {
+  margin: 20px;
+  padding: 0;
+}
+
+.form__submit-btn:hover {
+  transform: scale(1.1);
+}
