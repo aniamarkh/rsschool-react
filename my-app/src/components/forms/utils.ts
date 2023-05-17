@@ -1,12 +1,12 @@
-import { PlantData } from 'types/types';
+import { CardData } from 'types/types';
 
-export const findMaxId = (data: PlantData[]): number => {
+export const findMaxId = (data: CardData[]): number => {
   if (data.length === 0) {
     return 0;
   } else {
     return (
       Math.max(
-        ...data.map((object: PlantData) => {
+        ...data.map((object: CardData) => {
           return object.id;
         })
       ) + 1
