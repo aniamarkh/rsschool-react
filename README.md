@@ -1,6 +1,7 @@
 # React Movie Search App 
 Welcome to this unnamed React project created during the [RS School React course](https://rs.school/react/). This application allows users to search for movies using the themoviedb API. It also features a validated form page. The project is built using React, Vite, Vitest, React Redux, React Router, and React Hook Form.
 
+### [DEMO](https://react-course-aniamarkh.onrender.com/)
 ## Features
 - Built with React, Vite, Vitest, React Redux, React Router, and React Hook Form
 - Search for movies using the themoviedb API
